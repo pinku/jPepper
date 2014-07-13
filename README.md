@@ -15,7 +15,17 @@ For simple project jPepper is ready to use, with him you can do simple DOM manip
 
 ### Usage
 
-jPepper is simple
+jPepper is simple:
+
+```html
+
+// you can use the jPepper function
+var mydiv = jPepper("div#mydiv");
+
+// or, the short function with the _ (underscore) character
+var mydiv2 = _("div#mydiv2");
+
+```
 
 ### Some comparisons
 Because the ultimate goal of jPepper is the execution speed, every new method is tested and compared with jQuery, 
