@@ -9,9 +9,13 @@ So I started writing my own library and that's is, this is jPepper.
 
 jPepper obviously is a baby compared to jquery, jPepper is David and jQuery is Golia. 
 I'm working hard to this library but I have a life, a wife and a lot of childrens 
-(actually we are waiting for the nine one), so be patient with me!
+(actually we are waiting for the ninth!), so be patient with me!
 
 For simple project jPepper is ready to use, with him you can do simple DOM manipulations, events binding and so on.
+
+### Usage
+
+jPepper is simple
 
 ### Some comparisons
 Because the ultimate goal of jPepper is the execution speed, every new method is tested and compared with jQuery, 
@@ -20,6 +24,11 @@ if jPepper method is faster means I did a good job.
 1) Query DOM :
 http://jsperf.com/jpepper-vs-jquery-1-query-dom
 
-2) Empty a DOM element:
+2) Empty DOM elements:
 http://jsperf.com/jpepper-vs-jquery-2-set-dom-element-attribute
 
+3) Set elements attribute
+http://jsperf.com/jpepper-vs-jquery-3-set-element-attribute
+
+4) Show elements:
+http://jsperf.com/jpepper-vs-jquery-4-show-elements
