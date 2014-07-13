@@ -17,5 +17,9 @@ For simple project jPepper is ready to use, with him you can do simple DOM manip
 Because the ultimate goal of jPepper is the execution speed, every new method is tested and compared with jQuery, 
 if jPepper method is faster means I did a good job.
 
-### Usage
-jPepper is simple, 
+1) Query DOM :
+http://jsperf.com/jpepper-vs-jquery-1-query-dom
+
+2) Empty a DOM element:
+http://jsperf.com/jpepper-vs-jquery-2-set-dom-element-attribute
+
