@@ -42,3 +42,7 @@ http://jsperf.com/jpepper-vs-jquery-3-set-element-attribute
 
 4) Show elements:
 http://jsperf.com/jpepper-vs-jquery-4-show-elements
+
+5) Set elements style:
+http://jsperf.com/jpepper-vs-jquery-5-set-elements-style
+
