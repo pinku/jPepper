@@ -1,5 +1,15 @@
 ﻿"use strict";
 
+/*
+jPepper
+Copyright 2014-2020 Diego Pianarosa
+d.pianarosa@pianarosa.net
+
+Source code at:
+https://github.com/pinku/jPepper
+
+*/
+
 (function (window) {
 
     var ALL_EVENTS = "*ALL*";
