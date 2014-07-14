@@ -17,32 +17,38 @@ For simple project jPepper is ready to use, with him you can do simple DOM manip
 
 jPepper is simple:
 
-```html
+    // you can use the jPepper function
+    var mydiv = jPepper("div#mydiv");
+    
+    // or, the short function with the _ (underscore) character
+    var mydiv2 = _("div#mydiv2");
 
-// you can use the jPepper function
-var mydiv = jPepper("div#mydiv");
+	// now I can manipulate DOM nodes
+	mydiv.setAttr("data-id", "123");
+	mydiv.setStyle("color", "red");
+	mydiv.show();
 
-// or, the short function with the _ (underscore) character
-var mydiv2 = _("div#mydiv2");
-
-```
+	//bind events
+	mydiv.on("click", function(e) {
+		alert("Hei! Have you clicked here?!?!?");
+	});   
 
 ### Some comparisons
 Because the ultimate goal of jPepper is the execution speed, every new method is tested and compared with jQuery, 
 if jPepper method is faster means I did a good job.
 
 1) Query DOM :
-http://jsperf.com/jpepper-vs-jquery-1-query-dom
+[http://jsperf.com/jpepper-vs-jquery-1-query-dom](http://jsperf.com/jpepper-vs-jquery-1-query-dom)
 
 2) Empty DOM elements:
-http://jsperf.com/jpepper-vs-jquery-2-set-dom-element-attribute
+[http://jsperf.com/jpepper-vs-jquery-2-set-dom-element-attribute](http://jsperf.com/jpepper-vs-jquery-2-set-dom-element-attribute)
 
 3) Set elements attribute
-http://jsperf.com/jpepper-vs-jquery-3-set-element-attribute
+[http://jsperf.com/jpepper-vs-jquery-3-set-element-attribute](http://jsperf.com/jpepper-vs-jquery-3-set-element-attribute)
 
 4) Show elements:
-http://jsperf.com/jpepper-vs-jquery-4-show-elements
+[http://jsperf.com/jpepper-vs-jquery-4-show-elements](http://jsperf.com/jpepper-vs-jquery-4-show-elements)
 
 5) Set elements style:
-http://jsperf.com/jpepper-vs-jquery-5-set-elements-style
+[http://jsperf.com/jpepper-vs-jquery-5-set-elements-style](http://jsperf.com/jpepper-vs-jquery-5-set-elements-style)
 
