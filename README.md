@@ -34,6 +34,7 @@ jPepper is simple:
 	});   
 
 ### Some comparisons
+
 Because the ultimate goal of jPepper is the execution speed, every new method is tested and compared with jQuery, 
 if jPepper method is faster means I did a good job.
 

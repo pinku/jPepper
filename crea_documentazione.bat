@@ -1,0 +1,1 @@
+jsdoc c:\inetpub\wwwroot\jpepper\js\jpepper.0.2.0.js -t c:\Users\Pinku\AppData\Roaming\npm\node_modules\ink-docstrap\template -c c:\inetpub\wwwroot\jpepper\jsdoc.conf.json -d c:\inetpub\wwwroot\jpepper\js\documentation

@@ -1,0 +1,95 @@
+﻿@gray1: #e4e4e4;
+
+body {
+    padding: 1em;
+    box-sizing: border-box;
+    position: relative;
+
+    section.content {
+        max-width: 56.25em; // 900px : 16px
+        margin: 0 auto;
+
+        h1 {
+            .font1;
+            font-size: 2.5em;
+            color: @gray1;
+            margin-bottom: .3em;
+        }
+
+        h2 {
+            .font1;
+            font-size: 1.5em;
+            color: @gray1;
+            margin-bottom: 1em;
+        }
+
+        h5, .h5 {
+            .font2;
+            font-size: 1em;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        h6 {
+            .font1;
+            font-size: .9em;
+            color: #fff;
+        }
+
+        p {
+            .font2;
+            color: @gray1;
+            font-size: 1em;
+            margin-bottom: .5em;
+            line-height: 1.4em;
+            text-align: justify;
+        }
+
+        section.left {
+
+            float: left;
+            max-width: 9.5em; // 200px : 16px
+            min-width: 9.5em; // 200px : 16px
+            text-align: right;
+            padding-right: 3em;
+            padding-top: 6em;
+            padding-bottom: 100000px; // trucco per colonne della stessa altezza
+            margin-bottom: -100000px; // trucco per colonne della stessa altezza
+
+            .summary {
+
+                ul {
+                    li {
+                        margin-bottom: .5em;
+                    }
+                }
+            }
+        }
+
+        section.right {
+
+            header {
+                margin-bottom: 2em;
+            }
+
+            float: left;
+            max-width: 43.75em; // 700px : 16px
+            padding-bottom: 100000px; // trucco per colonne della stessa altezza
+            margin-bottom: -100000px; // trucco per colonne della stessa altezza
+        }
+
+    }
+}
+
+.font1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+}
+
+.font2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bg1 {
+    background-color: #4A525A;
+}

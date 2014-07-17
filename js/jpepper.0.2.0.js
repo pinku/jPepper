@@ -14,217 +14,211 @@ https://github.com/pinku/jPepper
 
     var ALL_EVENTS = "*ALL*";
 
-    /*
-    jPepper(sel)
-    funzione principale di jPepper
-    parametri:
-    sel:    selettore per i nodi del DOM
-    return:
-    new jPepper.init(sel);
+    /**
+    @class jPepper
+    @summary This is the jPepper's main function, it can be used also in the short way whit the _ (underscore) character.
+    @param {string} sel Selector string for query the DOM (it can be an TAG name, and ID, a CSS Class, an attribute and so on...)
+    @return new jPepper.init(sel);
+    @example 
+    // query the DOM with tag name
+    var alldivs = _("div");
+
+    // query the DOM with id
+    var div1 = _("#div1");
     */
     var jPepper = function (sel) {
+
+        /**
+        @summary This function let you connect a handler to the document's ready state 
+        @param {function} fn Handler to connect to the event
+        @memberof jPepper
+        */
+        this.onDomReady = function (fn) {
+            document.onreadystatechange = function () {
+                if (document.readyState == "complete") {
+                    fn.call(document);
+                }
+            }
+        }
+        
+        /**
+        @summary This function let you iterate an array and call a function for each element
+        @param {array} arr Array to iterate
+        @param {function} fn function to call for each element
+        @memberof jPepper
+        */
+        this.each = function (arr, fn) {
+            var i = 0, len = arr.length;
+            while (i != len) {
+                fn.call(arr[i]);
+                i++;
+            }
+        }
+        
+        /**
+        @summary This array is used from jPepper to store each binded event
+        @property {array} events array for storing events
+        @memberof jPepper
+        */
+        this.events = [];
+
+        /**
+        @summary This function is used by jPepper to add an event handler to the events array
+        @param {string} event Name of the event to bind
+        @param {node} node DOM node for the event binding
+        @param {function} fn Handler to connect to the event
+        @memberof jPepper
+        @return this
+        */
+        this.addEvent = function (event, node, fn) {
+
+            // l'evento verrà aggiunto solo se non già presente, quindi ciclo
+            // per l'array per controlare che la voce non sia già presente
+            var i = 0, len = _.events.length, nullix = -1;
+            while (i != len) {
+                if (_.events[i] == null) {
+                    if (nullix == -1) nullix = i;
+                    i++;
+                    continue;
+                }
+                if (_.events[i].event == event &&
+                    _.events[i].node == node &&
+                    _.events[i].fn == fn) {
+                    return this;
+                }
+                i++;
+            }
+
+            if (nullix != -1) {
+                _.events[nullix] = {
+                    event: event,
+                    node: node,
+                    fn: fn
+                }
+            } else {
+                _.events[_.events.length] = {
+                    event: event,
+                    node: node,
+                    fn: fn
+                };
+            }
+            node.addEventListener(event, fn);
+
+            return this;
+
+        };
+
+        /**
+        @summary This function is used by jPepper to remove an event handler to the events array
+        @param {string} event Name of the event to bind
+        @param {node} node DOM node for the event binding
+        @memberof jPepper
+        @return this
+        */
+        this.removeEvent = function (event, node) {
+
+            // l'evento verrà rimosso solo se già presente
+            if (event != ALL_EVENTS) {
+                var i = 0, len = _.events.length;
+                while (i != len) {
+                    if (_.events[i] != null &&
+                        _.events[i].event == event &&
+                        _.events[i].node == node) {
+                        node.removeEventListener(event, _.events[i].fn);
+                        _.events[i] = null;
+                    }
+                    i++;
+                }
+            } else {
+                var i = 0, len = _.events.length;
+                while (i != len) {
+                    if (_.events[i] != null &&
+                        _.events[i].node == node) {
+                        node.removeEventListener(_.events[i].event, _.events[i].fn);
+                        _.events[i] = null;
+                    }
+                    i++;
+                }
+            }
+
+            return this;
+
+        };
+
+        /**
+        @class init
+        @summary This is the real constructor of a jPepper object. It's alway called by the jPepper(sel) function.
+        @param {string} sel Selector string for query the DOM (it can be an TAG name, and ID, a CSS Class, an attribute and so on...)
+        @return this
+        @memberof jPepper
+        */
+        this.init = function (sel) {
+
+            // type
+            this.type = "jPepper";
+
+            // selector
+            this.selector = sel;
+
+            // nodes array
+            this.nodes = [];
+
+            // events array
+            this.events = [];
+
+            // is a string?
+            if (typeof this.selector === "string") {
+                this.nodes = document.querySelectorAll(this.selector);
+            }
+
+            // is a object?
+            if (typeof this.selector === "object") {
+                this.nodes.push(this.selector);
+            }
+
+            return this;
+
+        };
+
+        /**
+        @func init
+        @summary This function let you to set an attribute for DOM's nodes.
+        @param {string} attr Name of the attribute to set
+        @param {string} val Value to set for the attribute
+        @param {int} [ix] index of the node
+        @memberof init
+        @instance
+        @return this
+        */
+        this.init.prototype.setAttr = function (attr, val, ix) {
+
+            // setter 
+            if (attr !== undefined && val !== undefined) {
+
+                // index is passed?
+                if (ix !== undefined) {
+                    this.nodes[ix].setAttribute(attr, val);
+                    return this;
+                }
+
+                var i = 0, len = this.nodes.length;
+                while (i != len) {
+                    this.nodes[i].setAttribute(attr, val);
+                    i++;
+                }
+
+            }
+
+            return this;
+
+        };
 
         return new jPepper.init(sel);
 
     };
 
-    //#region metodi statici
-
-    /*
-    jPepper.init(sel)
-    costruttore dell'oggetto jPepper
-    parametri:
-    sel:    selettore per i nodi del DOM
-    return: 
-    this
-    */
-    jPepper.init = function (sel) {
-
-        // type
-        this.type = "jPepper";
-
-        // selector
-        this.selector = sel;
-
-        // nodes array
-        this.nodes = [];
-
-        // events array
-        this.events = [];
-
-        // is a string?
-        if (typeof this.selector === "string") {
-            this.nodes = document.querySelectorAll(this.selector);
-        }
-
-        // is a object?
-        if (typeof this.selector === "object") {
-            this.nodes.push(this.selector);
-        }
-
-        return this;
-
-    };
-
-    /*
-    jPepper.onDomReady(fn)
-    funzione che permette di associare un handler al completamento della preparazione del DOM
-    parametri:
-    fn:     funzione da associare all'evento
-    */
-    jPepper.onDomReady = function (fn) {
-        document.onreadystatechange = function () {
-            if (document.readyState == "complete") {
-                fn.call(document);
-            }
-        }
-    }
-
-    /*
-    jPepper.each(array, fn)
-    permette di eseguire una funzioen per ogni elemento di un array
-    parametri:
-    array:  array
-    fn:     funzione da associare all'evento
-    */
-    jPepper.each = function (array, fn) {
-        var i=0, len=array.length;
-        while(i!=len) {
-            fn.call(array[i]);
-            i++;
-        }
-    }
-
-    /*
-    jPepper.events
-    array che contiene tutti gli eventi gestiti da jPepper
-    */
-    jPepper.events = [];
-
-    /*
-    jPepper.addEvent(event, node, fn)
-    aggiunge un evento all'array
-    parametri:
-    event:  nome dell'evento
-    node:   nodo al quale collegare l'evento
-    fn:     handler da collegare
-    return:
-    this
-    */
-    jPepper.addEvent = function (event, node, fn) {
-
-        // l'evento verrà aggiunto solo se non già presente, quindi ciclo
-        // per l'array per controlare che la voce non sia già presente
-        var i = 0, len = _.events.length, nullix = -1;
-        while (i != len) {
-            if (_.events[i] == null) {
-                if (nullix == -1) nullix = i;
-                i++;
-                continue;
-            }
-            if (_.events[i].event == event &&
-                _.events[i].node == node &&
-                _.events[i].fn == fn) {
-                return this;
-            }
-            i++;
-        }
-
-        if (nullix != -1) {
-            _.events[nullix] = {
-                event: event,
-                node: node,
-                fn: fn
-            }
-        } else {
-            _.events[_.events.length] = {
-                event: event,
-                node: node,
-                fn: fn
-            };
-        }
-        node.addEventListener(event, fn);
-
-        return this;
-
-    };
-
-    /*
-    jPepper.removeEvent(event, node, fn)
-    aggiunge un evento all'array
-    parametri:
-    event:  nome dell'evento
-    node:   nodo al quale collegare l'evento
-    return:
-    this
-    */
-    jPepper.removeEvent = function (event, node) {
-
-        // l'evento verrà rimosso solo se già presente
-        if (event != ALL_EVENTS) {
-            var i = 0, len = _.events.length;
-            while(i!=len) {
-                if (_.events[i] != null &&
-                    _.events[i].event == event &&
-                    _.events[i].node == node) {
-                    node.removeEventListener(event, _.events[i].fn);
-                    _.events[i] = null;
-                }
-                i++;
-            }
-        } else {
-            var i = 0, len = _.events.length;
-            while(i!=len) {
-                if (_.events[i] != null &&
-                    _.events[i].node == node) {
-                    node.removeEventListener(_.events[i].event, _.events[i].fn);
-                    _.events[i] = null;
-                }
-                i++;
-            }
-        }
-
-        return this;
-
-    };
-
-    //#endregion
-
     //#region metodi di istanza
 
-    /*
-    .setAttr(attr, val, ix)
-    funzione che permette di settare il valore di un attributo 
-    se non passato l'indice del nodo, la funzione attribuirà il valore a tutti i nodi presenti nella nodelist
-    parametri:
-    attr:   nome dell'attributo
-    val:    valore da attribuire
-    ix:     indice del nodo (riferito alla nodelist)
-    return:
-    this
-    */
-    jPepper.init.prototype.setAttr = function (attr, val, ix) {
-
-        // setter 
-        if (attr !== undefined && val !== undefined) {
-
-            // index is passed?
-            if (ix !== undefined) {
-                this.nodes[ix].setAttribute(attr, val);
-                return this;
-            }
-
-            var i = 0, len = this.nodes.length;
-            while(i!=len) {
-                this.nodes[i].setAttribute(attr, val);
-                i++;
-            }
-
-        }
-
-        return this;
-
-    };
 
     /*
     .getAttr(attr, ix) 
@@ -430,6 +424,38 @@ https://github.com/pinku/jPepper
         while (i != len) {
             this.nodes[i].innerHTML = null;
             i++;
+        }
+
+        return this;
+
+    };
+
+    /*
+    .remove(ix)
+    permette di rimuovere il/i nodi dal DOM
+    se non passato l'indice del nodo, la funzione rimuoverà tutti i nodi presenti nella nodelist
+    parametri:
+    ix:     indice del nodo (riferito alla nodelist)
+    return: 
+    this
+    */
+    jPepper.init.prototype.remove = function (ix) {
+
+        // index is passed?
+        if (ix !== undefined) {
+            this.nodes[ix].parentNode.removeChild(this.nodes[ix]);
+            return this;
+        }
+
+        //var i = 0, len = this.nodes.length;
+        //while (i != len) {
+        //    this.nodes[i].parentNode.removeChild(this.nodes[i]);
+        //    i++;
+        //}
+        
+        var i = 0, elem;
+        for (; (elem = elems[i]) != null; i++) {
+            this.nodes[i].parentNode.removeChild(this.nodes[i]);
         }
 
         return this;

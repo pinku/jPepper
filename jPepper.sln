@@ -8,20 +8,20 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "jPepper", "http://localhost
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/jPepper"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\inetpub\wwwroot\jPepper\"
+		Debug.AspNetCompiler.PhysicalPath = "..\jPepper\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\jPepper\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/jPepper"
-		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\..\inetpub\wwwroot\jPepper\"
+		Release.AspNetCompiler.PhysicalPath = "..\jPepper\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\jPepper\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\..\..\..\..\inetpub\wwwroot\jPepper\"
+		SlnRelativePath = "..\jPepper\"
 	EndProjectSection
 EndProject
 Global
