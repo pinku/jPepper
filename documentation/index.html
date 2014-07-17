@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jPepper</title>
+
+    <link href="css/reset.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css' />
+    <link href="PrettyPrint/prettify.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+
+    <script src="js/docs.js"></script>
+    <script src="PrettyPrint/prettify.js"></script>
+    <script src="../js/jpepper.stable.js"></script>
+
+    <script type="text/javascript">
+        _.onDomReady(function () {
+    
+            window.left = _("section.left");
+            window.right = _("section.right article");
+
+            loadInto("pages/leftsummary.html", left);
+            loadInto("pages/introduction.html", right);
+
+        });
+    </script>
+</head>
+<body class="bg1">
+    <section class="content">
+        <section class="left"></section>
+        <section class="right">
+            <header>
+                <h1>jPepper</h1>
+                <h6>by Diego Pianarosa</h6>
+            </header>
+            <article></article>
+        </section>
+    </section>
+</body>
+</html>
