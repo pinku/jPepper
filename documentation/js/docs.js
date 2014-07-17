@@ -39,6 +39,24 @@
     xhr.send('');
 }
 
+function rebindEvents() {
+
+    _(".leftsummary ul li a").on("click", function (e) {
+
+        var link = _(e.currentTarget);
+        var menu = link.getAttr("data-menu");
+        loadInto("pages/" + menu + ".html", right);
+
+    });
+
+    _("a[data-cmd=page").on("click", function (e) {
+
+        var link = _(e.currentTarget);
+        var menu = link.getAttr("data-page");
+        loadInto("pages/" + menu + ".html", right);
+
+    });
+}
 
 function loadInto(url, jp) {
 
@@ -46,6 +64,8 @@ function loadInto(url, jp) {
         jp.nodes[0].innerHTML = e.responseText;
 
         prettyPrint();
+
+        rebindEvents();
     });
 
 }

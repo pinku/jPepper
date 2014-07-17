@@ -43,24 +43,56 @@ body {
             margin-bottom: .5em;
             line-height: 1.4em;
             text-align: justify;
+
+            a {
+                color: #ffd800;
+                text-decoration: none;
+            }
+
+            b {
+            }
+        }
+
+        .caption {
+            .font1;
+            font-size: 1em;
+            font-weight: 400;
+            color: #fff;
+            display: inline-block;
+            margin-bottom: .5em;
+            margin-top: 1em;
         }
 
         section.left {
-
             float: left;
-            max-width: 9.5em; // 200px : 16px
-            min-width: 9.5em; // 200px : 16px
+            max-width: 10em; // 200px : 16px
+            min-width: 10em; // 200px : 16px
             text-align: right;
-            padding-right: 3em;
+            padding-right: 2.5em;
             padding-top: 6em;
             padding-bottom: 100000px; // trucco per colonne della stessa altezza
             margin-bottom: -100000px; // trucco per colonne della stessa altezza
-
-            .summary {
+            .leftsummary {
 
                 ul {
                     li {
-                        margin-bottom: .5em;
+
+                        span {
+                            display: inline-block;
+                            margin-bottom: .5em;
+                            margin-top: 1em;
+                            color: #B6B6B6;
+                        }
+
+                        a {
+                            display: inline-block;
+                            margin-bottom: .5em;
+
+                            &.lvl2 {
+                                font-size: .9em;
+                                color: #72C7FD;
+                            }
+                        }
                     }
                 }
             }
@@ -76,8 +108,76 @@ body {
             max-width: 43.75em; // 700px : 16px
             padding-bottom: 100000px; // trucco per colonne della stessa altezza
             margin-bottom: -100000px; // trucco per colonne della stessa altezza
-        }
+            table.params {
+                background-color: ActiveCaption;
+                border-radius: .4em;
+                .font2;
+                font-size: .9em;
+                margin-top: 1em;
+                margin-bottom: 1em;
+                width: 100%;
 
+                th {
+                    font-weight: bold;
+                    background-color: #808080;
+                    color: #fff;
+                    padding: .5em;
+                    border-left: solid 1px #9C9C9C;
+                    text-align: left;
+
+                    &:first-child {
+                        border-left: none;
+                    }
+                }
+
+                td {
+                    padding: 1em;
+                    border-left: solid 1px #9C9C9C;
+                    text-align: left;
+                    color: #4A525A;
+
+                    &:first-child {
+                        border-left: none;
+                    }
+                }
+            }
+
+            ul {
+                li.func {
+                    .font1;
+                    font-size: 1.5em;
+                    color: #4A525A;
+                    background-color: ActiveCaption;
+                    padding: .5em;
+                    border-radius: 5px;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                li.returns {
+                    .font2;
+                    font-size: .9em;
+                    color: #e4e4e4;
+                    margin-bottom: 1em;
+                    background-color: #808080;
+                    padding: .5em;
+                    border-radius: 5px;
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+
+                    h4 {
+                        font-weight: bold;
+                        display: inline-block;
+                        margin-left: 2em;
+
+                        a {
+                            color:#72C7FD;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
