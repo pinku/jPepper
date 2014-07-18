@@ -1,10 +1,10 @@
 ﻿<section class="page">
     <ul>
         <li class="func">
-            getAttr(attr, i)
+            remove(i)
         </li>
         <li class="returns">
-            Returns: <h4>value of the attribute (if found)</h4>
+            Returns: <h4>this</h4>
         </li>
     </ul>
     <table class="params">
@@ -17,30 +17,29 @@
             </tr>
         </thead>
         <tr>
-            <td class="name">attr</td>
-            <td class="type">string</td>
-            <td class="optional">No</td>
-            <td>Attribute's name to set.</td>
-        </tr>
-        <tr>
             <td class="name">i</td>
             <td class="type">integer</td>
             <td class="optional">Yes</td>
-            <td>Index of the node, if not passed the function will be return the first node's attribute value.</td>
+            <td>Index of the node, if not passed the function will be called for all elements.</td>
         </tr>
     </table>
 
-    <p>This function let you get attribute value for a element. </p>
+    <p>This function let you remove elements from DOM.</p>
 
-    <span class="caption">HTML</span>
+    <span class="caption">HTML before</span>
     <pre class="prettyprint">
-    <div data-id="myid">DIV1</div>
+    <div id="div1">I'm div1!</div>
+    <div id="div2">I'm div2!</div>
     </pre>
 
     <span class="caption">Javascript</span>
     <pre class="prettyprint">
-    var attr = _("DIV").getAttr("data-id");     
-    alert(attr);    // myid
+    _("#div1").remove();
+    </pre>
+
+    <span class="caption">HTML after</span>
+    <pre class="prettyprint">
+    <div id="div2">I'm div2!</div>
     </pre>
 
 </section>

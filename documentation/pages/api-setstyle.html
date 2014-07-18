@@ -1,0 +1,57 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            setStyle(style, val, i)
+        </li>
+        <li class="returns">
+            Returns: <h4>this</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">style</td>
+            <td class="type">string</td>
+            <td class="optional">No</td>
+            <td>Name of the css style property to set.</td>
+        </tr>
+        <tr>
+            <td class="name">val</td>
+            <td class="type">string</td>
+            <td class="optional">No</td>
+            <td>Value to set for the style property.</td>
+        </tr>
+        <tr>
+            <td class="name">i</td>
+            <td class="type">integer</td>
+            <td class="optional">Yes</td>
+            <td>Index of the node, if not passed the function will be executed for all nodes.</td>
+        </tr>
+    </table>
+
+    <p>This function let you to set an inline css style property for elements.</p>
+
+    <span class="caption">HTML before</span>
+    <pre class="prettyprint">
+    <div>DIV1</div>
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    // set color style
+    _("DIV").setStyle("color","red");     
+    </pre>
+
+    <span class="caption">HTML after</span>
+    <pre class="prettyprint">
+    <div style="color:red;">DIV1</div>
+    </pre>
+
+</section>

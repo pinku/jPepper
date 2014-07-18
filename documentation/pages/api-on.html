@@ -1,0 +1,92 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            on(events, fn, args)
+        </li>
+        <li class="returns">
+            Returns: <h4>this</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">events</td>
+            <td class="type">string</td>
+            <td class="optional">No</td>
+            <td>
+                Name of the event/s to bind. It can be a single event name (es: click) or multiple events, in
+                this case separate each event with a space (es: click tap)
+            </td>
+        </tr>
+        <tr>
+            <td class="name">fn</td>
+            <td class="type">function</td>
+            <td class="optional">No</td>
+            <td>Handler to connect to the event.</td>
+        </tr>
+        <tr>
+            <td class="name">args</td>
+            <td class="type">object</td>
+            <td class="optional">Yes</td>
+            <td>Object that will be passed as argument to the handler function.</td>
+        </tr>
+    </table>
+
+    <p>This function let you connect a handler function to events.</p>
+
+    <p>You can connect a single event like in the example below:</p>
+
+    <span class="caption">HTML</span>
+    <pre class="prettyprint">
+    <a id="mybutton" href="#">Click me!</a>
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    _("#mybutton").on("click", function(e){
+        alert("Hei who clicked me?!?");
+    });
+    </pre>
+
+    <p>Or you can connect multiple events at the same time:</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    _("#mybutton").on("click tap", function(e){
+        alert("Hei who clicked me?!?");
+    });
+    </pre>
+
+    <p>You can connect more of the same event to an element, in this case all handlers will be called in binding sequence.</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    // first click handler
+    _("#mybutton").on("click", function(e){
+        alert("I'm the first handler!");
+    });
+    // second click handler
+    _("#mybutton").on("click", function(e){
+        alert("I'm the second handler!");
+    });
+    </pre>
+
+    <p>You also can pass some arguments to the event handler.</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    for (var i=0; i < 10; i++) {
+        _("a#nr" + i).on("click", function(e, a) {
+            alert("My index is: " a.index);
+        }, 
+        {
+            index: i
+        });
+    }
+    </pre>
+
+</section>

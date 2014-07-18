@@ -1,0 +1,53 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            off(events)
+        </li>
+        <li class="returns">
+            Returns: <h4>this</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">events</td>
+            <td class="type">string</td>
+            <td class="optional">No</td>
+            <td>
+                Name of the event/s to bind. It can be a single event name (es: click) or multiple events, in
+                this case separate each event with a space (es: click tap)
+            </td>
+        </tr>
+    </table>
+
+    <p>This function let you to unbind events from elements.</p>
+
+    <p>You can unbind a single event like in the example below:</p>
+
+    <span class="caption">HTML</span>
+    <pre class="prettyprint">
+    <a id="mybutton" href="#">Click me!</a>
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    _("#mybutton").on("click", function(e){
+        alert("Ok ok! you clicked me but this is the last time!");
+        _(e.currentTarget).off("click");
+    });
+    </pre>
+
+    <p>Or you can unbind all events at the same time:</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    _("a").off();
+    </pre>
+
+</section>

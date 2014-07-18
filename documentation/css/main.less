@@ -1,4 +1,5 @@
 ﻿@gray1: #e4e4e4;
+@leftcolwidth: 10em; // 200px : 16px
 
 body {
     padding: 1em;
@@ -8,6 +9,8 @@ body {
     section.content {
         max-width: 56.25em; // 900px : 16px
         margin: 0 auto;
+        padding-left: @leftcolwidth;
+        padding-right: 0;
 
         h1 {
             .font1;
@@ -65,8 +68,9 @@ body {
 
         section.left {
             float: left;
-            max-width: 10em; // 200px : 16px
-            min-width: 10em; // 200px : 16px
+            max-width: @leftcolwidth;
+            min-width: @leftcolwidth;
+            margin-left: -@leftcolwidth;
             text-align: right;
             padding-right: 2.5em;
             padding-top: 6em;
@@ -99,7 +103,11 @@ body {
         }
 
         section.right {
-
+            float: left;
+            width: 100%;
+            max-width: 43.75em; // 700px : 16px
+            padding-bottom: 100000px; // trucco per colonne della stessa altezza
+            margin-bottom: -100000px; // trucco per colonne della stessa altezza
             header {
                 margin-bottom: 2em;
 
@@ -109,10 +117,6 @@ body {
                 }
             }
 
-            float: left;
-            max-width: 43.75em; // 700px : 16px
-            padding-bottom: 100000px; // trucco per colonne della stessa altezza
-            margin-bottom: -100000px; // trucco per colonne della stessa altezza
             table.params {
                 background-color: #99B4D1;
                 border-radius: .4em;
@@ -121,6 +125,7 @@ body {
                 margin-top: 1em;
                 margin-bottom: 1em;
                 width: 100%;
+
                 tr {
                     border-bottom: solid 1px #9C9C9C;
 
@@ -136,7 +141,7 @@ body {
                     padding: .5em;
                     border-left: solid 1px #9C9C9C;
                     text-align: left;
-                    
+
                     &:first-child {
                         border-left: none;
                     }
@@ -183,12 +188,16 @@ body {
                         margin-left: 2em;
 
                         a {
-                            color:#72C7FD;
+                            color: #72C7FD;
                             text-decoration: none;
                         }
                     }
                 }
             }
+        }
+
+        footer {
+            clear: both;
         }
     }
 }
