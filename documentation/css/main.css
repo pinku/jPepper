@@ -1,4 +1,4 @@
-﻿body {
+body {
   padding: 1em;
   box-sizing: border-box;
   position: relative;
@@ -49,7 +49,7 @@ body section.content p a {
 body section.content .caption {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
-  font-size: 1em;
+  font-size: .8em;
   font-weight: 400;
   color: #fff;
   display: inline-block;
@@ -89,14 +89,24 @@ body section.content section.right {
 body section.content section.right header {
   margin-bottom: 2em;
 }
+body section.content section.right header .adsbygoogle {
+  float: right;
+  margin-top: -3.5em;
+}
 body section.content section.right table.params {
-  background-color: ActiveCaption;
+  background-color: #99B4D1;
   border-radius: .4em;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: .9em;
   margin-top: 1em;
   margin-bottom: 1em;
   width: 100%;
+}
+body section.content section.right table.params tr {
+  border-bottom: solid 1px #9C9C9C;
+}
+body section.content section.right table.params tr:last-child {
+  border-bottom: none;
 }
 body section.content section.right table.params th {
   font-weight: bold;
@@ -110,10 +120,10 @@ body section.content section.right table.params th:first-child {
   border-left: none;
 }
 body section.content section.right table.params td {
-  padding: 1em;
+  padding: .5em;
   border-left: solid 1px #9C9C9C;
   text-align: left;
-  color: #4A525A;
+  color: #000;
 }
 body section.content section.right table.params td:first-child {
   border-left: none;
@@ -123,7 +133,7 @@ body section.content section.right ul li.func {
   font-weight: 700;
   font-size: 1.5em;
   color: #4A525A;
-  background-color: ActiveCaption;
+  background-color: #99B4D1;
   padding: .5em;
   border-radius: 5px;
   border-bottom-left-radius: 0;

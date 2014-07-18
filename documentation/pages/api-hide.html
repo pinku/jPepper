@@ -1,0 +1,50 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            hide(i)
+        </li>
+        <li class="returns">
+            Returns: <h4>this</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">i</td>
+            <td class="type">integer</td>
+            <td class="optional">Yes</td>
+            <td>Index of the node, if not passed the function will be executed for all nodes.</td>
+        </tr>
+    </table>
+
+    <p>This function let you to hide elements. </p>
+
+    <span class="caption">HTML</span>
+    <pre class="prettyprint">
+    <div>DIV1</div>
+    <div>DIV2</div>
+    <div>DIV3</div>
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    // create a jPepper object for all DIVS
+    var divs = _("DIV");     
+
+    // let's hide all divs
+    divs.hide();
+
+    // let's hide only the second one
+    divs.hide(1);
+    </pre>
+
+    <p>The style property <b>display</b> will be setted to "none".</p>
+
+</section>

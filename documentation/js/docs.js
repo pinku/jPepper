@@ -41,19 +41,33 @@
 
 function rebindEvents() {
 
-    _(".leftsummary ul li a").on("click", function (e) {
+    _(".leftsummary ul li a").off().on("click", function (e) {
 
         var link = _(e.currentTarget);
         var menu = link.getAttr("data-menu");
-        loadInto("pages/" + menu + ".html", right);
+        var url = document.URL;
+        var ix = url.indexOf("?");
+        if (ix != -1) {
+            url = url.substring(0, ix);
+        }
+        url = url.replace("#", "");
+        url = url + "?page=" + menu;
+        window.location = url;
 
     });
 
-    _("a[data-cmd=page").on("click", function (e) {
+    _("a[data-cmd=page").off().on("click", function (e) {
 
         var link = _(e.currentTarget);
         var menu = link.getAttr("data-page");
-        loadInto("pages/" + menu + ".html", right);
+        var url = document.URL;
+        var ix = url.indexOf("?");
+        if (ix != -1) {
+            url = url.substring(0, ix);
+        }
+        url = url.replace("#", "");
+        url = url + "?page=" + menu;
+        window.location = url;
 
     });
 }
@@ -63,9 +77,46 @@ function loadInto(url, jp) {
     load(url, function (e) {
         jp.nodes[0].innerHTML = e.responseText;
 
-        prettyPrint();
+        prettify();
 
         rebindEvents();
+
     });
+
+}
+
+function queryString(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function checkQueryString() {
+
+    var page = queryString("page");
+    if (page != "") {
+        loadInto("pages/"+page+".html", right);
+    } else {
+        loadInto("pages/introduction.html", right);
+    }
+}
+
+function prettify() {
+
+    // sostituisce tutti i caratteri speciali per l'html
+    var pre = _("pre");
+    var i = 0, len = pre.nodes.length;
+    var reg1 = new RegExp("<", "g");
+    var reg2 = new RegExp(">", "g"); 
+    var reg3 = new RegExp('"', "g"); 
+
+    while (i != len) {
+        pre.nodes[i].innerHTML = pre.nodes[i].innerHTML.replace(reg1, "&lt;")
+        pre.nodes[i].innerHTML = pre.nodes[i].innerHTML.replace(reg2, "&rt;") 
+        pre.nodes[i].innerHTML = pre.nodes[i].innerHTML.replace(reg3, "&quot;") 
+        i++;
+    }
+    prettyPrint();
 
 }

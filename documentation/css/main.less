@@ -55,7 +55,7 @@ body {
 
         .caption {
             .font1;
-            font-size: 1em;
+            font-size: .8em;
             font-weight: 400;
             color: #fff;
             display: inline-block;
@@ -102,6 +102,11 @@ body {
 
             header {
                 margin-bottom: 2em;
+
+                .adsbygoogle {
+                    float: right;
+                    margin-top: -3.5em;
+                }
             }
 
             float: left;
@@ -109,13 +114,20 @@ body {
             padding-bottom: 100000px; // trucco per colonne della stessa altezza
             margin-bottom: -100000px; // trucco per colonne della stessa altezza
             table.params {
-                background-color: ActiveCaption;
+                background-color: #99B4D1;
                 border-radius: .4em;
                 .font2;
                 font-size: .9em;
                 margin-top: 1em;
                 margin-bottom: 1em;
                 width: 100%;
+                tr {
+                    border-bottom: solid 1px #9C9C9C;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                }
 
                 th {
                     font-weight: bold;
@@ -124,17 +136,17 @@ body {
                     padding: .5em;
                     border-left: solid 1px #9C9C9C;
                     text-align: left;
-
+                    
                     &:first-child {
                         border-left: none;
                     }
                 }
 
                 td {
-                    padding: 1em;
+                    padding: .5em;
                     border-left: solid 1px #9C9C9C;
                     text-align: left;
-                    color: #4A525A;
+                    color: #000;
 
                     &:first-child {
                         border-left: none;
@@ -147,7 +159,7 @@ body {
                     .font1;
                     font-size: 1.5em;
                     color: #4A525A;
-                    background-color: ActiveCaption;
+                    background-color: #99B4D1;
                     padding: .5em;
                     border-radius: 5px;
                     border-bottom-left-radius: 0;

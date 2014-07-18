@@ -442,15 +442,11 @@ https://github.com/pinku/jPepper
             return this;
         }
 
-        //var i = 0, len = this.nodes.length;
-        //while (i != len) {
-        //    this.nodes[i].parentNode.removeChild(this.nodes[i]);
-        //    i++;
-        //}
-
-        var i = 0, elem;
-        for (; (elem = elems[i]) != null; i++) {
-            this.nodes[i].parentNode.removeChild(this.nodes[i]);
+        var i = 0, len = this.nodes.length;
+        while (i != len) {
+            _.removeEvent(ALL_EVENTS, this.nodes[i]);
+            this.nodes[i].remove();
+            i++;
         }
 
         return this;
