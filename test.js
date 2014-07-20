@@ -10,6 +10,7 @@
     x.on("click.first", function (e) { alert("click1"); })
     x.on("click.second", function (e) {
         alert("click2");
-        x.off("click");
     })
+    x.trigger();
+
 });

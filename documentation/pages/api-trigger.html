@@ -1,0 +1,72 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            trigger(events)
+        </li>
+        <li class="returns">
+            Returns: <h4>this</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">events</td>
+            <td class="type">string</td>
+            <td class="optional">No</td>
+            <td>
+                Name of the event/s to bind. It can be a single event name (es: click) or multiple events, in
+                this case separate each event with a space (es: click tap)
+                You can also use namespace to make unique you binging, add a dot and the your custom name
+                for the event(ex: click.myclick)
+            </td>
+        </tr>
+    </table>
+
+    <p>This function let you cann handler connected to events.</p>
+
+    <span class="caption">HTML</span>
+    <pre class="prettyprint">
+    <a id="mybutton" href="#">Click me!</a>
+    </pre>
+
+    <p>You can trigger a single event by event name:</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    var a = _("#mybutton");
+    a.on("click", function(e){
+        alert("Ok ok!");
+    });
+    a.trigger("click");
+    </pre>
+
+    <p>You can trigger all events:</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+            var a = _("#mybutton");
+    a.on("click", function(e){
+        alert("Ok ok!");
+    });
+    a.trigger();
+    </pre>
+
+    <p>You can trigger a event by custom name:</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    var a = _("#mybutton");
+    a.on("click.first", function(e){
+        alert("first!");
+    });
+    a.on("click.second", function(e){
+        alert("second!");
+    });
+    a.trigger(".second"); // or a.trigger("click.second");
+    </pre>
+
+</section>
