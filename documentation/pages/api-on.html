@@ -21,8 +21,10 @@
             <td class="type">string</td>
             <td class="optional">No</td>
             <td>
-                Name of the event/s to bind. It can be a single event name (es: click) or multiple events, in
-                this case separate each event with a space (es: click tap)
+                Name of the event/s to bind. It can be a single event name (ex: click) or multiple events, in
+                this case separate each event with a space (ex: click tap)
+                You can also use namespace to make unique you binging, add a dot and the your custom name
+                for the event(ex: click.myclick)
             </td>
         </tr>
         <tr>
@@ -87,6 +89,13 @@
             index: i
         });
     }
+    </pre>
+
+    <p>You can give a custom name to your binding, very useful in case of multiple attacched event</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    _("#mybutton").on("click.first", function(e) { alert("first!");});
+    _("#mybutton").on("click.second", function(e) { alert("second!");});
     </pre>
 
 </section>

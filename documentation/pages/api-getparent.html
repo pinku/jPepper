@@ -1,0 +1,52 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            getParent(i)
+        </li>
+        <li class="returns">
+            Returns: <h4>new jPepper.init() object with parents of the elements.</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">i</td>
+            <td class="type">integer</td>
+            <td class="optional">Yes</td>
+            <td>Index of the node, if not passed the function will be return the first node's attribute value.</td>
+        </tr>
+    </table>
+
+    <p>This function let you create a new jPepper.init() object with the parents of the elements. </p>
+
+    <span class="caption">HTML</span>
+    <pre class="prettyprint">
+    <div id="daddy">I'm daddy!
+    <div id="child">
+            I'm a child
+        </div>
+    </div>
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    var child=_("#child");
+    var daddy = child.getParent();  // return a new jPepper.init() object with 
+                                    // only div#daddy
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    var divs=_("div");
+    var parents = divs.getParent(); // return a new jPepper.init() object with 
+                                    // all the parents  of the elements 
+    </pre>
+
+</section>

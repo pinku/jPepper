@@ -23,6 +23,8 @@
             <td>
                 Name of the event/s to bind. It can be a single event name (es: click) or multiple events, in
                 this case separate each event with a space (es: click tap)
+                You can also use namespace to make unique you binging, add a dot and the your custom name
+                for the event(ex: click.myclick)
             </td>
         </tr>
     </table>
@@ -48,6 +50,14 @@
     <span class="caption">Javascript</span>
     <pre class="prettyprint">
     _("a").off();
+    </pre>
+
+    <p>Or you can unbind events by custom name:</p>
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    _("a").off("click.first");
+    // or
+    _("a").off(".first");
     </pre>
 
 </section>

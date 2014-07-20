@@ -66,12 +66,13 @@ https://github.com/pinku/jPepper
     This function is used by jPepper to add an event handler to the events array
     params:
     event       <string>    Name of the event to bind
+    name        <string>    Custom name of the event, useful in case of multiple binding
     node        <node>      DOM node for the event binding
     fn          <function>  Handler to connect to the event
     returns:
     this
     */
-    jPepper.addEvent = function (event, node, fn) {
+    jPepper.addEvent = function (event, name, node, fn) {
 
         // l'evento verrà aggiunto solo se non già presente, quindi ciclo
         // per l'array per controlare che la voce non sia già presente
@@ -83,6 +84,7 @@ https://github.com/pinku/jPepper
                 continue;
             }
             if (_.events[i].event == event &&
+                _.events[i].name == name &&
                 _.events[i].node == node &&
                 _.events[i].fn == fn) {
                 return this;
@@ -93,12 +95,14 @@ https://github.com/pinku/jPepper
         if (nullix != -1) {
             _.events[nullix] = {
                 event: event,
+                name: name,
                 node: node,
                 fn: fn
             }
         } else {
             _.events[_.events.length] = {
                 event: event,
+                name: name,
                 node: node,
                 fn: fn
             };
@@ -113,14 +117,29 @@ https://github.com/pinku/jPepper
     This function is used by jPepper to remove an event handler to the events array
     params:
     event       <string>    Name of the event to bind
+    name        <string>    Custom name of the event, useful in case of multiple binding
     node        <node>      DOM node for the event binding
     returns:
     this
     */
-    jPepper.removeEvent = function (event, node) {
+    jPepper.removeEvent = function (event, name, node) {
 
-        // l'evento verrà rimosso solo se già presente
-        if (event != ALL_EVENTS) {
+        if (event != ALL_EVENTS && event != "" && name != "") {
+            var i = 0, len = _.events.length;
+            while (i != len) {
+                if (_.events[i] != null &&
+                    _.events[i].event == event &&
+                    _.events[i].name == name &&
+                    _.events[i].node == node) {
+                    node.removeEventListener(event, _.events[i].fn);
+                    _.events[i] = null;
+                }
+                i++;
+            }
+            return this;
+        }
+
+        if (event != ALL_EVENTS && event != "" && name == "") {
             var i = 0, len = _.events.length;
             while (i != len) {
                 if (_.events[i] != null &&
@@ -131,7 +150,25 @@ https://github.com/pinku/jPepper
                 }
                 i++;
             }
-        } else {
+            return this;
+        }
+
+        if (event != ALL_EVENTS && event == "" && name != "") {
+            var i = 0, len = _.events.length;
+            while (i != len) {
+                if (_.events[i] != null &&
+                    _.events[i].name == name &&
+                    _.events[i].node == node) {
+                    node.removeEventListener(event, _.events[i].fn);
+                    _.events[i] = null;
+                }
+                i++;
+            }
+            return this;
+        }
+
+        // event == ALL_EVENTS?
+        if (event == ALL_EVENTS) {
             var i = 0, len = _.events.length;
             while (i != len) {
                 if (_.events[i] != null &&
@@ -141,9 +178,8 @@ https://github.com/pinku/jPepper
                 }
                 i++;
             }
+            return this;
         }
-
-        return this;
 
     };
 
@@ -174,7 +210,7 @@ https://github.com/pinku/jPepper
         }
 
         // is a object?
-        if (typeof this.selector === "object" && 
+        if (typeof this.selector === "object" &&
             !(this.selector instanceof Array)) {
             this.nodes.push(this.selector);
         }
@@ -467,7 +503,7 @@ https://github.com/pinku/jPepper
     returns:
     new jPepper.init() object with parents of the elements
     */
-    jPepper.init.prototype.parent = function (ix) {
+    jPepper.init.prototype.getParent = function (ix) {
 
         // index is passed?
         if (ix !== undefined) {
@@ -513,7 +549,12 @@ https://github.com/pinku/jPepper
                 var y = 0, len2 = evarr.length;
                 while (y != len2) {
                     var e = evarr[y];
-                    _.addEvent(e, n, fx);
+                    var ea = e.split(".");
+                    if (ea.length == 1) {
+                        _.addEvent(e, "", n, fx);
+                    } else {
+                        _.addEvent(ea[0], ea[1], n, fx);
+                    }
                     y++;
                 }
                 i++;
@@ -535,6 +576,7 @@ https://github.com/pinku/jPepper
 
         var _this = this;
 
+        // evenss is not blank?
         if (events !== undefined && events != "") {
 
             var evarr = events.split(" ");
@@ -543,7 +585,12 @@ https://github.com/pinku/jPepper
             while (i != len) {
                 var y = 0, len2 = evarr.length;
                 while (y != len2) {
-                    _.removeEvent(evarr[y], this.nodes[i]);
+                    var ea = evarr[y].split(".");
+                    if (ea.length == 1) {
+                        _.removeEvent(ea[0], "", this.nodes[i]);
+                    } else {
+                        _.removeEvent(ea[0], ea[1], this.nodes[i]);
+                    }
                     y++;
                 }
                 i++;
@@ -559,8 +606,8 @@ https://github.com/pinku/jPepper
 
         }
 
-
         return this;
+
     };
 
     //#endregion
