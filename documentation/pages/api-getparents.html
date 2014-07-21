@@ -1,0 +1,53 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            getParents(sel, i)
+        </li>
+        <li class="returns">
+            Returns: <h4>new jPepper.init() object with parents at any level of the elements.</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">sel</td>
+            <td class="type">string</td>
+            <td class="optional">No</td>
+            <td>A string containing selectors expression</td>
+        </tr>
+        <tr>
+            <td class="name">i</td>
+            <td class="type">integer</td>
+            <td class="optional">Yes</td>
+            <td>Index of the node, if not passed the function will be return the first node's attribute value.</td>
+        </tr>
+    </table>
+
+    <p>This function let you create a new jPepper.init() object with the parents at any levels of the elements. </p>
+
+    <span class="caption">HTML</span>
+    <pre class="prettyprint">
+    <div id="div1">
+        <span id="span1"></span>
+    </div>
+
+    <div id="div2">
+        <span id="span2"></span>
+    </div>
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    var spans = _("span");
+    var divs = spans.getParents("div"); // will return a new jPepper.init() object 
+                                        // containing div1 and div2
+    </pre>
+
+</section>

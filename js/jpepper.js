@@ -58,6 +58,46 @@ https://github.com/pinku/jPepper
     }
 
     /**
+    This function let you make an XMLHttpRequest to and Url
+    params:
+    url     <string>    Url to call
+    args    <object>    Object containing parameteres for the call
+    returns:
+    result of the call, false in case of error
+    */
+    jPepper.load = function (url, args, callback) {
+
+        var p = '';
+        if (typeof (args) == 'object') {
+            p = JSON.stringify(args);
+        } else {
+            p = args;
+        }
+
+        var xhr;
+        try {
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', url, false);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        if (callback !== undefined) {
+                            callback(true, xhr.response);
+                        }
+                    }
+                }
+            };
+            xhr.send(p);
+        } catch (e) {
+            if (callback !== undefined) {
+                callback(false, e);
+            }
+        }
+
+    };
+
+    /**
     This array is used from jPepper to store each binded event
     */
     jPepper.events = [];
@@ -587,6 +627,76 @@ https://github.com/pinku/jPepper
     };
 
     /**
+    This function let get parents at any level of elements
+    params:
+    sel         <string>    Selector string for query the DOM (it can be an TAG name, and ID, a CSS Class, an attribute and so on...)
+    [ix]        <int>       (Optional) Index of the node
+    returns:
+    new jPepper.init() object with parents of the elements
+    */
+    jPepper.init.prototype.getParents = function (sel, ix) {
+
+        // index is passed?
+        if (ix !== undefined) {
+            var n = this.nodes[ix].parentNode;
+            while (true) {
+                if (n == document && sel == document) {
+                    return new jPepper.init(n);
+                }
+                if (n == document && sel != document) {
+                    return new jPepper.init();
+                }
+                if (n.matches(sel)) {
+                    return new jPepper.init(n);
+                }
+                n = n.parentNode;
+            }
+        }
+
+        var i = 0, len = this.nodes.length, arr = [];
+        while (i != len) {
+            var n = this.nodes[i].parentNode;
+            while (true) {
+                if (n == document && sel == document) {
+                    arr.push(document);
+                    break;
+                }
+                if (n == document && sel != document) {
+                    break;
+                }
+                if (n.matches(sel)) {
+                    arr.push(n);
+                    break;
+                }
+                n = n.parentNode;
+            }
+
+            i++;
+        }
+
+        return new jPepper.init(arr);
+
+    };
+
+    /**
+    This function let you clone a jPepper object
+    params:
+    returns:
+    new jPepper.init() object cloned from origina
+    */
+    jPepper.init.prototype.clone = function () {
+
+        var i = 0, len = this.nodes.length, arr = [];
+        while (i != len) {
+            arr.push(this.nodes[i].cloneNode(true));
+            i++;
+        }
+
+        return new jPepper.init(arr);
+
+    };
+
+    /**
     This function let you bind an handler to an event
     params:
     events      <string>    Event or events name to bind. Each event can be separated with a space
@@ -712,7 +822,7 @@ https://github.com/pinku/jPepper
 
             var i = 0, len = this.nodes.length;
             while (i != len) {
-                _.triggerEvent(ALL_EVENTS,"", this.nodes[i]);
+                _.triggerEvent(ALL_EVENTS, "", this.nodes[i]);
                 i++;
             }
 

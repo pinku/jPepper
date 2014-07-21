@@ -66,12 +66,13 @@ https://github.com/pinku/jPepper
     This function is used by jPepper to add an event handler to the events array
     params:
     event       <string>    Name of the event to bind
+    name        <string>    Custom name of the event, useful in case of multiple binding
     node        <node>      DOM node for the event binding
     fn          <function>  Handler to connect to the event
     returns:
     this
     */
-    jPepper.addEvent = function (event, node, fn) {
+    jPepper.addEvent = function (event, name, node, fn) {
 
         // l'evento verrà aggiunto solo se non già presente, quindi ciclo
         // per l'array per controlare che la voce non sia già presente
@@ -83,6 +84,7 @@ https://github.com/pinku/jPepper
                 continue;
             }
             if (_.events[i].event == event &&
+                _.events[i].name == name &&
                 _.events[i].node == node &&
                 _.events[i].fn == fn) {
                 return this;
@@ -93,12 +95,14 @@ https://github.com/pinku/jPepper
         if (nullix != -1) {
             _.events[nullix] = {
                 event: event,
+                name: name,
                 node: node,
                 fn: fn
             }
         } else {
             _.events[_.events.length] = {
                 event: event,
+                name: name,
                 node: node,
                 fn: fn
             };
@@ -113,14 +117,29 @@ https://github.com/pinku/jPepper
     This function is used by jPepper to remove an event handler to the events array
     params:
     event       <string>    Name of the event to bind
+    name        <string>    Custom name of the event, useful in case of multiple binding
     node        <node>      DOM node for the event binding
     returns:
     this
     */
-    jPepper.removeEvent = function (event, node) {
+    jPepper.removeEvent = function (event, name, node) {
 
-        // l'evento verrà rimosso solo se già presente
-        if (event != ALL_EVENTS) {
+        if (event != ALL_EVENTS && event != "" && name != "") {
+            var i = 0, len = _.events.length;
+            while (i != len) {
+                if (_.events[i] != null &&
+                    _.events[i].event == event &&
+                    _.events[i].name == name &&
+                    _.events[i].node == node) {
+                    node.removeEventListener(event, _.events[i].fn);
+                    _.events[i] = null;
+                }
+                i++;
+            }
+            return this;
+        }
+
+        if (event != ALL_EVENTS && event != "" && name == "") {
             var i = 0, len = _.events.length;
             while (i != len) {
                 if (_.events[i] != null &&
@@ -131,7 +150,25 @@ https://github.com/pinku/jPepper
                 }
                 i++;
             }
-        } else {
+            return this;
+        }
+
+        if (event != ALL_EVENTS && event == "" && name != "") {
+            var i = 0, len = _.events.length;
+            while (i != len) {
+                if (_.events[i] != null &&
+                    _.events[i].name == name &&
+                    _.events[i].node == node) {
+                    node.removeEventListener(event, _.events[i].fn);
+                    _.events[i] = null;
+                }
+                i++;
+            }
+            return this;
+        }
+
+        // event == ALL_EVENTS?
+        if (event == ALL_EVENTS) {
             var i = 0, len = _.events.length;
             while (i != len) {
                 if (_.events[i] != null &&
@@ -141,9 +178,74 @@ https://github.com/pinku/jPepper
                 }
                 i++;
             }
+            return this;
         }
 
-        return this;
+    };
+
+    /**
+    This function is used by jPepper to trigger an event handler
+    params:
+    event       <string>    Name of the event to bind
+    name        <string>    Custom name of the event, useful in case of multiple binding
+    node        <node>      DOM node for the event binding
+    returns:
+    this
+    */
+    jPepper.triggerEvent = function (event, name, node) {
+
+        if (event != ALL_EVENTS && event != "" && name != "") {
+            var i = 0, len = _.events.length;
+            while (i != len) {
+                if (_.events[i] != null &&
+                    _.events[i].event == event &&
+                    _.events[i].name == name &&
+                    _.events[i].node == node) {
+                    _.events[i].fn.call(this);
+                }
+                i++;
+            }
+            return this;
+        }
+
+        if (event != ALL_EVENTS && event != "" && name == "") {
+            var i = 0, len = _.events.length;
+            while (i != len) {
+                if (_.events[i] != null &&
+                    _.events[i].event == event &&
+                    _.events[i].node == node) {
+                    _.events[i].fn.call(this);
+                }
+                i++;
+            }
+            return this;
+        }
+
+        if (event != ALL_EVENTS && event == "" && name != "") {
+            var i = 0, len = _.events.length;
+            while (i != len) {
+                if (_.events[i] != null &&
+                    _.events[i].name == name &&
+                    _.events[i].node == node) {
+                    _.events[i].fn.call(this);
+                }
+                i++;
+            }
+            return this;
+        }
+
+        // event == ALL_EVENTS?
+        if (event == ALL_EVENTS) {
+            var i = 0, len = _.events.length;
+            while (i != len) {
+                if (_.events[i] != null &&
+                    _.events[i].node == node) {
+                    _.events[i].fn.call(this);
+                }
+                i++;
+            }
+            return this;
+        }
 
     };
 
@@ -174,7 +276,7 @@ https://github.com/pinku/jPepper
         }
 
         // is a object?
-        if (typeof this.selector === "object" && 
+        if (typeof this.selector === "object" &&
             !(this.selector instanceof Array)) {
             this.nodes.push(this.selector);
         }
@@ -467,7 +569,7 @@ https://github.com/pinku/jPepper
     returns:
     new jPepper.init() object with parents of the elements
     */
-    jPepper.init.prototype.parent = function (ix) {
+    jPepper.init.prototype.getParent = function (ix) {
 
         // index is passed?
         if (ix !== undefined) {
@@ -477,6 +579,76 @@ https://github.com/pinku/jPepper
         var i = 0, len = this.nodes.length, arr = [];
         while (i != len) {
             arr.push(this.nodes[i].parentNode);
+            i++;
+        }
+
+        return new jPepper.init(arr);
+
+    };
+
+    /**
+    This function let get parents at any level of elements
+    params:
+    sel         <string>    Selector string for query the DOM (it can be an TAG name, and ID, a CSS Class, an attribute and so on...)
+    [ix]        <int>       (Optional) Index of the node
+    returns:
+    new jPepper.init() object with parents of the elements
+    */
+    jPepper.init.prototype.getParents = function (sel, ix) {
+
+        // index is passed?
+        if (ix !== undefined) {
+            var n = this.nodes[ix].parentNode;
+            while (true) {
+                if (n == document && sel == document) {
+                    return new jPepper.init(n);
+                }
+                if (n == document && sel != document) {
+                    return new jPepper.init();
+                }
+                if (n.matches(sel)) {
+                    return new jPepper.init(n);
+                }
+                n = n.parentNode;
+            }
+        }
+
+        var i = 0, len = this.nodes.length, arr = [];
+        while (i != len) {
+            var n = this.nodes[i].parentNode;
+            while (true) {
+                if (n == document && sel == document) {
+                    arr.push(document);
+                    break;
+                }
+                if (n == document && sel != document) {
+                    break;
+                }
+                if (n.matches(sel)) {
+                    arr.push(n);
+                    break;
+                }
+                n = n.parentNode;
+            }
+
+            i++;
+        }
+
+        return new jPepper.init(arr);
+
+    };
+
+    /**
+    This function let you clone a jPepper object
+    params:
+    returns:
+    new jPepper.init() object cloned from origina
+    */
+    jPepper.init.prototype.clone = function () {
+        
+        var i = 0, len = this.nodes.length, arr = [];
+        while (i != len) {
+            arr.push(this.nodes[i].cloneNode(true));
             i++;
         }
 
@@ -513,7 +685,12 @@ https://github.com/pinku/jPepper
                 var y = 0, len2 = evarr.length;
                 while (y != len2) {
                     var e = evarr[y];
-                    _.addEvent(e, n, fx);
+                    var ea = e.split(".");
+                    if (ea.length == 1) {
+                        _.addEvent(e, "", n, fx);
+                    } else {
+                        _.addEvent(ea[0], ea[1], n, fx);
+                    }
                     y++;
                 }
                 i++;
@@ -535,6 +712,7 @@ https://github.com/pinku/jPepper
 
         var _this = this;
 
+        // evenss is not blank?
         if (events !== undefined && events != "") {
 
             var evarr = events.split(" ");
@@ -543,7 +721,12 @@ https://github.com/pinku/jPepper
             while (i != len) {
                 var y = 0, len2 = evarr.length;
                 while (y != len2) {
-                    _.removeEvent(evarr[y], this.nodes[i]);
+                    var ea = evarr[y].split(".");
+                    if (ea.length == 1) {
+                        _.removeEvent(ea[0], "", this.nodes[i]);
+                    } else {
+                        _.removeEvent(ea[0], ea[1], this.nodes[i]);
+                    }
                     y++;
                 }
                 i++;
@@ -559,8 +742,54 @@ https://github.com/pinku/jPepper
 
         }
 
+        return this;
+
+    };
+
+    /**
+    This function let you trigger handler connected to events
+    params:
+    [events]    <string>    (Optional)  Event or events name to remove. Each event can be separated with a space
+                                        If not passed each events will be disconnected
+    returns:
+    this
+    */
+    jPepper.init.prototype.trigger = function (events) {
+
+        var _this = this;
+
+        // evenss is not blank?
+        if (events !== undefined && events != "") {
+
+            var evarr = events.split(" ");
+
+            var i = 0, len = this.nodes.length;
+            while (i != len) {
+                var y = 0, len2 = evarr.length;
+                while (y != len2) {
+                    var ea = evarr[y].split(".");
+                    if (ea.length == 1) {
+                        _.triggerEvent(ea[0], "", this.nodes[i]);
+                    } else {
+                        _.triggerEvent(ea[0], ea[1], this.nodes[i]);
+                    }
+                    y++;
+                }
+                i++;
+            }
+
+        } else {
+
+            var i = 0, len = this.nodes.length;
+            while (i != len) {
+                _.triggerEvent(ALL_EVENTS,"", this.nodes[i]);
+                i++;
+            }
+
+        }
 
         return this;
+
     };
 
     //#endregion
