@@ -4,6 +4,8 @@
 jPepper
 Copyright 2014-2020 Diego Pianarosa
 d.pianarosa@pianarosa.net
+jpepper@jpepper.org
+www.jpepper.org
 
 Source code at:
 https://github.com/pinku/jPepper
@@ -13,6 +15,11 @@ https://github.com/pinku/jPepper
 (function (window) {
 
     var ALL_EVENTS = "*ALL*";
+
+    //#region Task
+    //#endregion
+
+    //#region jPepper
 
     /**
     This is the jPepper's main function, it can be used also in the short way whit the _ (underscore) character.
@@ -94,7 +101,6 @@ https://github.com/pinku/jPepper
                 callback(false, e);
             }
         }
-
     };
 
     /**
@@ -331,6 +337,78 @@ https://github.com/pinku/jPepper
 
     };
 
+    //#endregion
+
+    //region jPepper.Queue
+    jPepper.Queue = function () {
+
+        this.tasks = [];
+        this.qi = 0;
+        this.running = false;
+        this.stopped = true;
+    };
+    jPepper.Queue.prototype.add = function (t, args) {
+
+        t.queue = this;
+        t.queueindex = this.tasks.length;
+        this.tasks.push({
+            task: t,
+            args: args
+        });
+
+        return this;
+    };
+    jPepper.Queue.prototype.start = function (args) {
+
+        this.stopped = false;
+        var a = args === undefined ? this.tasks[this.qi].args : args;
+        this.tasks[this.qi].task.fn(a);
+
+    };
+    jPepper.Queue.prototype.next = function () {
+
+        if (this.stopped == true) return;
+        this.qi += 1;
+        if (this.qi == this.tasks.length) return;
+        this.tasks[this.qi].task.prevTask = this.tasks[this.qi - 1].task;
+        this.tasks[this.qi].task.fn(this.tasks[this.qi].args);
+
+    };
+    jPepper.Queue.prototype.stop = function () {
+        this.stopped = true;
+    };
+    //#endregion
+
+    //#region jPepper.Task
+    jPepper.Task = function (fn, args) {
+
+        this.fn = fn;
+        this.args = args;
+
+    };
+    jPepper.Task.prototype.ok = function () {
+        this.queue.next();
+    };
+    jPepper.Task.prototype.err = function () {
+        this.queue.stop();
+    };
+    jPepper.Task.prototype.ifok = function (t, args) {
+        if (this.queue === undefined) {
+            this.queue = new Queue();
+            this.queue.add(this, this.args);
+        }
+        this.queue.add(t, args);
+        return this;
+    };
+    jPepper.Task.prototype.do = function (args) {
+        if (this.queue === undefined) {
+            this.queue = new Queue();
+            this.queue.add(this, args);
+        }
+        this.queue.tasks[this.queueindex].args = args;
+        this.queue.start();
+        return this;
+    };
     //#endregion
 
     //#region instance methods
@@ -835,5 +913,9 @@ https://github.com/pinku/jPepper
     //#endregion
 
     window.jPepper = window._ = jPepper;
+    window.Queue = jPepper.Queue;
+    window.Task = jPepper.Task;
+
+    //#endregion
 
 })(window);
