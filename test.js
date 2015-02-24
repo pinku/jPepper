@@ -1,53 +1,23 @@
 ﻿_.onDomReady(function () {
 
     var x = _("div");
-    
+
     x
         .setStyle("width", "200px")
-        .setStyle("height", "200px")
-        .setStyle("background-color","red");
+        .setStyle("height", "200px");
 
-    var t1 = new Task(function (args) {
+    var div1 = _("#div1");
+    div1.setStyle("background-color", "red");
 
-        alert("task1");
+    var div2 = _("#div2");
+    div2.setStyle("background-color", "green");
 
-        var y = args.a + args.b;
+    _("#run").on("click", function () {
 
-        this.results = y;
-        this.ok();
-
-    });
-    var t2 = new Task(function (h) {
-
-        alert("task2");
-
-        var g = this.prevTask.results + h;
-
-        alert(g);
-
-        this.results = g;
-
-        this.ok();
+        _.POST("perfdesk/perfdesk.asmx/helloworld").then(function () {
+            console.log("then");
+            debugger;
+        }).do();
 
     });
-    var t3 = new Task(function (h) {
-
-        alert("task3");
-
-        var g = this.prevTask.results + h;
-
-        alert(g);
-
-        this.ok();
-
-    });
-
-    t1
-        .ifok(t2, 20)
-        .ifok(t3, 100)
-        .do({
-            a: 10,
-            b: 10
-        });
-
 });

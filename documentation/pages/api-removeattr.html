@@ -1,0 +1,51 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            removeAttr(attr, i)
+        </li>
+        <li class="returns">
+            Returns: <h4>this</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">attr</td>
+            <td class="type">string</td>
+            <td class="optional">No</td>
+            <td>Attribute's name to remove.</td>
+        </tr>
+        <tr>
+            <td class="name">i</td>
+            <td class="type">integer</td>
+            <td class="optional">Yes</td>
+            <td>Index of the node, if not passed the function will be executed for all nodes.</td>
+        </tr>
+    </table>
+
+    <p>This function let you to remove an attribute from elements. </p>
+
+    <span class="caption">HTML before</span>
+    <pre class="prettyprint">
+    <div data-id="myid">DIV1</div>
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    // remove a data- attribute
+    _("DIV").removeAttr("data-id");     
+    </pre>
+
+    <span class="caption">HTML after</span>
+    <pre class="prettyprint">
+    <div>DIV1</div>
+    </pre>
+
+</section>

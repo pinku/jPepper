@@ -1,0 +1,40 @@
+﻿<section class="page">
+    <ul>
+        <li class="func">
+            getVal(i)
+        </li>
+        <li class="returns">
+            Returns: <h4>value of the attribute (if found)</h4>
+        </li>
+    </ul>
+    <table class="params">
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Type</th>
+                <th>Optional</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="name">i</td>
+            <td class="type">integer</td>
+            <td class="optional">Yes</td>
+            <td>Index of the node, if not passed the function will be return the first node's value.</td>
+        </tr>
+    </table>
+
+    <p>This function let you get value of a element. </p>
+
+    <span class="caption">HTML</span>
+    <pre class="prettyprint">
+    <div>This is value</div>
+    </pre>
+
+    <span class="caption">Javascript</span>
+    <pre class="prettyprint">
+    var value = _("DIV").getVal();     
+    alert(value);    // this is value
+    </pre>
+
+</section>
