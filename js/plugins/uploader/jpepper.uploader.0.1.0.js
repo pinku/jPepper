@@ -37,6 +37,10 @@ up.uploader("startUpload");
     var MAXFILESIZE = "maxfilesize";
     var FOLDER = "folder";
     var APPENDTO = "appendto";
+    var CREATETHUMBS = "createthumbs";
+    var THUMBSFOLDER = "thumbsfolder";
+    var THUMBSWIDTH = "thumbswidth";
+    var THUMBSHEIGHT = "thumbsheight";
     var SERVERHANDLER = "serverhandler";
     var FILETYPES = "filetypes";
     var UPLOADERTYPE = "uptype";
@@ -87,7 +91,31 @@ up.uploader("startUpload");
             if (args[SERVERHANDLER] !== undefined) {
                 this.data[SERVERHANDLER] = args[SERVERHANDLER];
             }
+            // create thumbs
+            if (args[CREATETHUMBS] !== undefined) {
+                this.data[CREATETHUMBS] = args[CREATETHUMBS];
+            } else {
+                this.data[CREATETHUMBS] = false;
+            }
+            // thumbs folder
+            if (args[THUMBSFOLDER] !== undefined) {
+                this.data[THUMBSFOLDER] = args[THUMBSFOLDER];
+            }
+            // thumbs width
+            if (args[THUMBSWIDTH] !== undefined) {
+                this.data[THUMBSWIDTH] = args[THUMBSWIDTH];
+            }
+            // thumbs height
+            if (args[THUMBSHEIGHT] !== undefined) {
+                this.data[THUMBSHEIGHT] = args[THUMBSHEIGHT];
+            }
         }
+
+        this.data.filenames = [];
+
+        this.destroy = destroy;
+        this.startUpload = startUpload;
+        this.renamefile = renamefile;
 
         bindevents.call(this);
     };
@@ -105,16 +133,27 @@ up.uploader("startUpload");
 
         this.trigger(EVTFILESUPLOADSTART);
 
+        if (this.data.files === undefined ||
+            this.data.files == null ||
+            this.data.files.length == 0) {
+            _this.trigger(EVTFILESUPLOADEND);
+            return;
+        }
+
         var i = 0, len = this.data.files.length;
         while (i != len) {
             var uri = this.data[SERVERHANDLER];
             var xhr = new XMLHttpRequest();
             var fd = new FormData();
             var file = this.data.files[i];
-
+            var newname = this.data.filenames[i] != undefined ? this.data.filenames[i] : file.name;
+            
             this.trigger(EVTFILEUPLOADSTART, file);
 
             xhr.open("POST", uri, true);
+            xhr.onprogress = function (e) {
+                _this.trigger(EVTFILESUPLOADPROGRESS, e);
+            }
             xhr.onreadystatechange = function (e) {
 
                 // success
@@ -134,14 +173,20 @@ up.uploader("startUpload");
                 if ((this.readyState == 4 || this.readyState == 3) && this.status != 200) {
 
                     this.onreadystatechange = null;
-                    this.trigger(EVTERROR, new _.Error(ERRORSOURCE, "", this.statusText, _this));
+                    _this.trigger(EVTERROR, new _.Error(ERRORSOURCE, "", this.statusText, _this));
 
                 }
             };
             fd.append("file", file);
-            fd.append("name", file.name);
+            fd.append("name", newname);
             fd.append("fileindex", i);
             fd.append("folder", _this.data[FOLDER] !== undefined ? this.data[FOLDER] : "");
+            if (_this.data[CREATETHUMBS]) {
+                fd.append(CREATETHUMBS, "true");
+                if (_this.data[THUMBSFOLDER]) fd.append(THUMBSFOLDER, _this.data[THUMBSFOLDER]);
+                if (_this.data[THUMBSWIDTH]) fd.append(THUMBSWIDTH, _this.data[THUMBSWIDTH]);
+                if (_this.data[THUMBSHEIGHT]) fd.append(THUMBSHEIGHT, _this.data[THUMBSHEIGHT]);
+            }
             xhr.fileindex = i;
             xhr.file = file;
             xhr.send(fd);
@@ -183,6 +228,9 @@ up.uploader("startUpload");
 
         var _this = this;
 
+        if (this.data.files !== undefined && this.data.files.length != 0) {
+            Array.prototype.push.apply(e.target.files, _this.data.files);
+        }
         this.data.files = e.target.files;
 
         if (!validate.call(this)) return false;
@@ -204,11 +252,11 @@ up.uploader("startUpload");
     function checkfilesext(files, exts) {
         var i1 = 0, len1 = files.length;
         while (i1 != len1) {
-            var ext = files[i1].name.substr((~-files[i1].name.lastIndexOf(".") >>> 0) + 2).trim();
+            var ext = files[i1].name.substr((~-files[i1].name.lastIndexOf(".") >>> 0) + 2).trim().toLowerCase();
             var i2 = 0, len2 = exts.length;
             var ok = false;
             while (i2 != len2) {
-                if (exts[i2].trim() == ext) ok = true;
+                if (exts[i2].trim().toLowerCase() == ext) ok = true;
                 i2++;
             }
             if (ok == false) {
@@ -219,6 +267,8 @@ up.uploader("startUpload");
         return true;
     };
     function validate() {
+
+        var _this = this;
 
         if (this.data[MAXFILESIZE] !== undefined) {
             if (!checkfilessize(this.data.files, this.data[MAXFILESIZE])) {
@@ -245,27 +295,54 @@ up.uploader("startUpload");
             while (i != len) {
                 var reader = new FileReader();
                 var file = this.data.files[i];
-
+                file.index = i;
                 if (file.type.match("image")) {
-                    reader.onloadend = function (e) {
-                        var img = "<img src='" + e.target.result + "'/>";
-                        var el = _(_this.data[APPENDTO]);
-                        el.innerHTML(el.innerHTML() + img);
-                    };
+                    reader.onload = (function (fi) {
+                        return function (e) {
+                            var img = "<img src='" + e.target.result + "' data-ix='" + fi.index + "'/>";
+                            var el = _(_this.data[APPENDTO]);
+                            el.innerHTML(el.innerHTML() + img);
+                        };
+                    })(file);
 
                     reader.readAsDataURL(file);
                 }
                 if (file.type.match("text")) {
-                    reader.onloadend = function (e) {
-                        var span = "<span>" + e.target.result + "'</span>";
-                        var el = _(_this.data[APPENDTO]);
-                        el.innerHTML(el.innerHTML() + span);
-                    };
+                    reader.onloadend = (function (fi) {
+                        return function (e) {
+                            var span = "<span data-ix='" + fi.index + "'>" + e.target.result + "'</span>";
+                            var el = _(_this.data[APPENDTO]);
+                            el.innerHTML(el.innerHTML() + span);
+                        };
+                    })(file);
 
                     reader.readAsText(file);
                 }
                 i++;
             }
+
+        }
+
+    };
+    function renamefile(i, n) {
+
+        if (this.data.files !== undefined &&
+            this.data.files !== null &&
+            this.data.files.length > 0 &&
+            this.data.files[i]) {
+
+            if (this.data.filenames.length == 0) {
+                var ix = 0, len = this.data.files.length;
+                while (ix < len) {
+                    this.data.filenames[ix] = this.data.files[ix].name;
+                    ix++;
+                }
+            }
+
+            var re = /(?:\.([^.]+))?$/;
+            var ext = re.exec(this.data.files[i].name)[1];
+            if (ext === undefined) ext = "";
+            this.data.filenames[i] = n + (ext == "" ? "" : "." + ext);
 
         }
 

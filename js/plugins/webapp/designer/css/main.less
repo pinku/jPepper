@@ -1,0 +1,135 @@
+﻿@tb1_height: 2em;
+@tb1_bgc: #2b2f33;
+@tb1_color: #ffffff;
+
+@tb2_width: 14em;
+@tb2_bgc: #2b2f33;
+
+@footer_height: 1em;
+@footer_bgc: #2b2f33;
+
+@desktop_bgc: #43484d;
+
+.font1 {
+    font-family: Arial;
+    font-size: 12px;
+}
+
+#main {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    #tb1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: @tb1_height;
+        background-color: @tb1_bgc;
+        border-bottom: solid 1px #808080;
+        z-index: 10;
+
+        a {
+            position: relative;
+            float: left;
+            margin: .8em 0 0 1em;
+            text-decoration: none;
+            color: @tb1_color;
+            .font1;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .wrap1 {
+        position: absolute;
+        top: @tb1_height;
+        left: 0;
+        width: 100%;
+        bottom: @footer_height;
+
+        #desktop {
+            top: @tb1_height;
+            left: 0;
+            bottom: @footer_height;
+            height: 100%;
+            width: auto;
+            background-color: @desktop_bgc;
+            overflow: hidden;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 1em;
+
+            [data-type=jPForm] {
+                width: 100%;
+                min-height: 5em;
+                border: dotted 1px rgba(255, 255, 255, 0.53);
+            }
+        }
+
+        #tb2 {
+            float: right;
+            right: 0;
+            top: @tb1_height;
+            bottom: @footer_height;
+            width: @tb2_width;
+            height: 100%;
+            background-color: @tb2_bgc;
+            border-left: solid 1px #808080;
+
+            #uicontrols {
+                margin: .2em;
+                background-color: #43484d;
+                width: auto;
+                height: auto;
+                padding: .5em;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+
+                .uicontrol {
+                    .font1;
+                    font-size: .6em;
+                    color: #ffffff;
+                    padding: .4em;
+                    -moz-box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                    border: solid 1px #ffffff;
+                    cursor: pointer;
+                    display: inline-block;
+                    margin-bottom: .5em;
+
+                    &:hover {
+                        background-color: #ff6a00;
+                    }
+                }
+            }
+            #properties {
+                margin: .2em;
+                background-color: #43484d;
+                width: auto;
+                height: auto;
+                padding: .5em;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+        }
+    }
+
+    #footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: @footer_height;
+        background-color: @footer_bgc;
+        border-top: solid 1px #808080;
+        z-index: 10;
+    }
+}

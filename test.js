@@ -1,23 +1,33 @@
 ﻿_.onDomReady(function () {
 
-    var x = _("div");
-
-    x
-        .setStyle("width", "200px")
-        .setStyle("height", "200px");
-
-    var div1 = _("#div1");
-    div1.setStyle("background-color", "red");
-
-    var div2 = _("#div2");
-    div2.setStyle("background-color", "green");
-
-    _("#run").on("click", function () {
-
-        _.POST("perfdesk/perfdesk.asmx/helloworld").then(function () {
-            console.log("then");
-            debugger;
-        }).do();
-
+    var form1 = new jPForm({
+        id:"form1"
     });
+    var section1 = new jPSection();
+    form1.addcontrol(section1);
+
+    var text1 = new jPText();
+    section1.addcontrol(text1);
+
+    var tb1 = new jPTextBox({
+        id: "codice"
+    });
+    section1.addcontrol(tb1);
+
+    var b1 = new jPButton({
+        caption: "Ok",
+        onclick: function (e) { 
+            var j = this.parent.parent.tojson();
+        }
+    });
+    section1.addcontrol(b1);
+
+    form1.on("afterrender",function (e) {
+    });
+
+    form1.appendto("body");
+
+    tb1.caption("ciao");
+
+
 });

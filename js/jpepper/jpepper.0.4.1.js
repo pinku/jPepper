@@ -12,6 +12,20 @@ https://github.com/pinku/jPepper
 
 */
 
+//#region Revisions
+
+/*
+[0.4.1] [09.04.15] [Diego Pianarosa]
+----------------------------------------------------
+-   Added disable/enable function
+-   Added data function
+-   Modified append function for supporting jPepper 
+    objects, nodes and strings
+----------------------------------------------------
+*/
+
+//#endregion
+
 (function (window) {
 
     var ALL_EVENTS = "*ALL*";
@@ -591,6 +605,27 @@ https://github.com/pinku/jPepper
         }
 
     };
+    jPepper.init.prototype.dattr = function (attr, val) {
+
+        // getter
+        if (val === undefined) {
+
+            return this.nodes[0].getAttribute("data-" + attr);
+
+        } else {
+
+            // setter
+            var i = 0, len = this.nodes.length;
+            while (i != len) {
+                this.nodes[i].setAttribute("data-" + attr, val);
+                i++;
+            }
+
+            return this;
+
+        }
+
+    };
     jPepper.init.prototype.removeAttr = function (attr) {
 
         var i = 0, len = this.nodes.length;
@@ -959,6 +994,7 @@ https://github.com/pinku/jPepper
         }
 
     };
+    jPepper.init.prototype.innerHtml = jPepper.init.prototype.innerHTML;
     jPepper.init.prototype.innerText = function (text) {
 
         // getter
@@ -1025,20 +1061,46 @@ https://github.com/pinku/jPepper
     jPepper.init.prototype.append = function (a) {
 
         if (a instanceof jPepper.init) {
-
             var i = 0, len = this.nodes.length;
             while (i != len) {
 
+                var n = this.nodes[i];
+
                 var y = 0, len2 = a.nodes.length;
                 while (y != len2) {
-
-                    this.nodes[i].appendChild(a.nodes[y]);
+                    n.appendChild(a.nodes[y]);
                     y++;
                 }
 
                 i++;
             }
+            return this;
+        }
 
+        if (typeof (a) == "object") {
+            var i = 0, len = this.nodes.length;
+            while (i != len) {
+
+                var n = this.nodes[i];
+
+                n.appendChild(a);
+
+                i++;
+            }
+            return this;
+        }
+
+        if (typeof (a) == "string") {
+            var i = 0, len = this.nodes.length;
+            while (i != len) {
+
+                var n = this.nodes[i];
+
+                n.innerHTML += a;
+
+                i++;
+            }
+            return this;
         }
 
         return this;
@@ -1081,6 +1143,26 @@ https://github.com/pinku/jPepper
             i++;
         }
 
+    };
+    jPepper.init.prototype.disable = function () {
+
+        var i = 0, len = this.nodes.length;
+        while (i != len) {
+            this.nodes[i].disabled = true;
+            i++;
+        }
+
+        return this;
+    };
+    jPepper.init.prototype.enable = function () {
+
+        var i = 0, len = this.nodes.length;
+        while (i != len) {
+            this.nodes[i].enabled = true;
+            i++;
+        }
+
+        return this;
     };
     //#endregion
 

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jPepper WebApp Designer</title>
+    <link href="css/reset.css" rel="stylesheet" />
+    <link href="css/main.min.css" rel="stylesheet" />
+    <script src="../../../jpepper/jpepper.0.4.0.js"></script>
+    <script src="../jpepper.webapp.0.1.0.js"></script>
+    <script src="js/designer.js"></script>
+    <script type="text/javascript">
+
+        _.onDomReady(function (e) {
+
+            window.designer = new Designer();
+
+        });
+
+    </script>
+</head>
+<body>
+    <div id="main">
+        <div id="tb1">
+            <a href="#" id="btn_new">NEW</a>
+            <a href="#" id="btn_newfromjson">NEW (from JSON)</a>
+            <a href="#" id="btn_save">SAVE</a>
+        </div>
+        <div class="wrap1">
+            <div id="tb2">
+                <div id="uicontrols">
+                    <a class="uicontrol" data-ctrl="section">SECTION</a>
+                    <a class="uicontrol" data-ctrl="text">TEXT</a>
+                    <a class="uicontrol" data-ctrl="textbox">TEXTBOX</a>
+                    <a class="uicontrol" data-ctrl="button">BUTTON</a>
+                    <a class="uicontrol" data-ctrl="image">IMAGE</a>
+                </div>
+                <div id="properties">
+
+                </div>
+            </div>
+            <div id="desktop"></div>
+            <br style="clear: both;" />
+        </div>
+        <div id="footer"></div>
+    </div>
+</body>
+</html>
