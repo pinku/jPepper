@@ -41,6 +41,7 @@ up.uploader("startUpload");
     var THUMBSFOLDER = "thumbsfolder";
     var THUMBSWIDTH = "thumbswidth";
     var THUMBSHEIGHT = "thumbsheight";
+    var SHOWUPLOADPROGRESS = "showuploadprogress";
     var SERVERHANDLER = "serverhandler";
     var FILETYPES = "filetypes";
     var UPLOADERTYPE = "uptype";
@@ -109,6 +110,10 @@ up.uploader("startUpload");
             if (args[THUMBSHEIGHT] !== undefined) {
                 this.data[THUMBSHEIGHT] = args[THUMBSHEIGHT];
             }
+            // show upload progress
+            if (args[SHOWUPLOADPROGRESS] !== undefined) {
+                this.data[SHOWUPLOADPROGRESS] = args[SHOWUPLOADPROGRESS];
+            }
         }
 
         this.data.filenames = [];
@@ -151,7 +156,18 @@ up.uploader("startUpload");
             this.trigger(EVTFILEUPLOADSTART, file);
 
             xhr.open("POST", uri, true);
+            xhr.setRequestHeader("Content-type", file.type);
             xhr.onprogress = function (e) {
+
+                if (e.lengthComputable) {
+
+                    var max = e.total;
+                    var value = e.loaded;
+                    var perc = Math.round(e.loaded / e.total * 100);
+                    console.trace(perc);
+
+                }
+
                 _this.trigger(EVTFILESUPLOADPROGRESS, e);
             }
             xhr.onreadystatechange = function (e) {
