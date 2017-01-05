@@ -65,11 +65,15 @@ https://github.com/pinku/jPepper
     jPepper.Error = function (src, code, msg, args) {
         this.init(src, code, msg, args);
     };
-    jPepper.Error.prototype.init = function (src, code, msg, args) {
+    jPepper.Error.p = jPepper.Error.prototype;
+    jPepper.Error.p.init = function (src, code, msg, args) {
         this.source = src;
         this.code = code;
         this.message = msg;
         this.args = args;
+    };
+    jPepper.Error.p.throw = function () {
+        throw (this.message);
     };
     //#endregion
 
@@ -87,8 +91,14 @@ https://github.com/pinku/jPepper
 
         t.queue = this;
         t.queueindex = this.tasks.length;
+
+        var task = t;
+        if (typeof t == "function") {
+            task = _.TaskInit(t, args);
+        }
+
         this.tasks.push({
-            task: t,
+            task: task,
             args: args
         });
 
@@ -176,7 +186,7 @@ https://github.com/pinku/jPepper
     jPepper.Task.prototype.err = function () {
         this.innerqueue.stop();
     };
-    jPepper.Task.prototype.then = function (t, args) {
+    jPepper.Task.prototype.then = function (t) {
 
         var args = [];
         var i = 1, len = arguments.length;

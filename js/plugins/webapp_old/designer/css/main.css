@@ -52,7 +52,6 @@
 #main .wrap1 #desktop [data-type=jPForm] {
   width: 100%;
   min-height: 5em;
-  border: dotted 1px rgba(255, 255, 255, 0.53);
 }
 #main .wrap1 #tb2 {
   float: right;
@@ -111,4 +110,3 @@
   border-top: solid 1px #808080;
   z-index: 10;
 }
-/*# sourceMappingURL=main.css.map */

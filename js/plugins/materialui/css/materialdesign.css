@@ -1,0 +1,254 @@
+﻿/******************************************************************************
+    global
+******************************************************************************/
+body {
+  margin: 0;
+}
+.row,
+.col {
+  overflow: hidden;
+  position: absolute;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.row {
+  left: 0;
+  right: 0;
+  padding: .2em;
+}
+.col {
+  top: 0;
+  bottom: 0;
+}
+.scroll-x {
+  overflow-x: auto;
+}
+.scroll-y {
+  overflow-y: auto;
+}
+/******************************************************************************
+    structure
+******************************************************************************/
+.viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -0.1em;
+  width: auto;
+  height: auto;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 60px;
+  font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+}
+.viewport .page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.viewport .page .toolbar,
+.viewport .page .footer {
+  overflow: hidden;
+  position: absolute;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+  padding: .2em;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4) !important;
+  height: 2.5em;
+  padding: .8em .2em;
+  font-size: 1em;
+}
+.viewport .page .content {
+  overflow-y: auto;
+  top: 2.5em;
+  bottom: 2.5em;
+  padding: .4em;
+}
+.viewport .page .content article {
+  padding: .4em;
+  margin-bottom: .4em;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.4);
+  float: left;
+}
+.viewport .page .content article .row {
+  position: relative;
+  float: left;
+  clear: both;
+  width: 100%;
+}
+.viewport .page .footer {
+  bottom: 0;
+  box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.4) !important;
+}
+.viewport .page a {
+  text-decoration: none;
+  color: inherit;
+}
+.viewport .panel {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: block;
+  -moz-transition: left .3s;
+  -o-transition: left .3s;
+  -webkit-transition: left .3s;
+  transition: left .3s;
+}
+.viewport .panel.left {
+  left: -100%;
+}
+.viewport .panel.left .inner {
+  left: 0;
+  right: 20%;
+  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.4) !important;
+}
+.viewport .panel.right {
+  left: 100%;
+}
+.viewport .panel.right .inner {
+  left: 20%;
+  right: 0;
+  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.4) !important;
+}
+.viewport .panel.visible {
+  left: 0;
+}
+.viewport .panel .inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.viewport .panel .inner .menuitem {
+  font-size: .8em;
+  text-decoration: none;
+  display: block;
+  border-bottom: solid 1px #DCEDC8;
+  padding: .5em .1em;
+  color: inherit;
+}
+.viewport .panel .inner .title {
+  font-size: .8em;
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+  border-bottom: solid 1px #DCEDC8;
+  padding: .5em .5em;
+  text-align: center;
+}
+/******************************************************************************
+    generics
+******************************************************************************/
+.aligncenter {
+  text-align: center;
+}
+.alignleft {
+  text-align: left;
+}
+.alignright {
+  text-align: right;
+}
+.floatleft {
+  float: left;
+}
+.floatright {
+  float: right;
+}
+.clearboth {
+  clear: both;
+}
+.fulltop {
+  top: 0 !important;
+}
+.fullbottom {
+  bottom: 0 !important;
+}
+.bottomshadow {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4) !important;
+}
+.topshadow {
+  box-shadow: 0 -5px 5px rgba(0, 0, 0, 0.4) !important;
+}
+.leftshadow {
+  box-shadow: -5px 0 5px rgba(0, 0, 0, 0.4) !important;
+}
+.rightshadow {
+  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.4) !important;
+}
+.size05 {
+  font-size: .5em;
+}
+.size06 {
+  font-size: .6em;
+}
+.size07 {
+  font-size: .7em;
+}
+.size08 {
+  font-size: .8em;
+}
+.size09 {
+  font-size: .9em;
+}
+.size2 {
+  font-size: 2em;
+}
+/******************************************************************************
+    colors
+******************************************************************************/
+.indigo.c100 {
+  background-color: #c3c9e8;
+  color: rgba(255, 255, 255, 0.87);
+}
+.indigo.c200 {
+  background-color: #9fa7d9;
+  color: rgba(255, 255, 255, 0.87);
+}
+.indigo.c300 {
+  background-color: #7a86cb;
+  color: rgba(255, 255, 255, 0.87);
+}
+.indigo.c400 {
+  background-color: #5564bd;
+  color: rgba(255, 255, 255, 0.87);
+}
+.indigo.c500 {
+  background-color: #3f4da0;
+  color: rgba(255, 255, 255, 0.87);
+}
+.indigo.c600 {
+  background-color: #303b7c;
+  color: rgba(255, 255, 255, 0.87);
+}
+.indigo.c700 {
+  background-color: #222a57;
+  color: rgba(255, 255, 255, 0.87);
+}
+.indigo.c800 {
+  background-color: #141832;
+  color: rgba(255, 255, 255, 0.87);
+}
+.indigo.c900 {
+  background-color: #05070e;
+  color: rgba(255, 255, 255, 0.87);
+}
+/*# sourceMappingURL=materialdesign.css.map */

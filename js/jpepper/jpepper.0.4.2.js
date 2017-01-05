@@ -48,8 +48,6 @@ https://github.com/pinku/jPepper
         "ERRCODE 1 - jPepper.align: No object found with the specified selector"
     ];
 
-    //var evtError = new CustomEvent(ERROR_EVENT);
-
     //#region jPepper
 
     var jPepper = function (sel) {

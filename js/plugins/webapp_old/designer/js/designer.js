@@ -31,6 +31,7 @@
         this.activeControl = this.form;
         this.desktop.empty();
         f.appendTo(this.desktop);
+        this.bindEventsToControl(f);
     };
     Designer.p.newControl = function (type) {
 
@@ -85,8 +86,14 @@
     };
     Designer.p.bindEventsToControl = function(c){
 
-        c.off("click").on("click", function (e) {
+        c.el.off("click").on("click", function (e) {
 
+        });
+        c.el.off("mouseover").on("mouseover", function (e) {
+            _(e.currentTarget).addClass("mover");
+        });
+        c.el.off("mouseout").on("mouseout", function (e) {
+            _(e.currentTarget).removeClass("mover");
         });
     };
 

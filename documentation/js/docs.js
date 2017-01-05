@@ -44,7 +44,7 @@ function rebindEvents() {
     _(".leftsummary ul li a").off().on("click", function (e) {
 
         var link = _(e.currentTarget);
-        var menu = link.getAttr("data-menu");
+        var menu = link.attr("data-menu");
         var url = document.URL;
         var ix = url.indexOf("?");
         if (ix != -1) {
@@ -59,7 +59,7 @@ function rebindEvents() {
     _("a[data-cmd=page").off().on("click", function (e) {
 
         var link = _(e.currentTarget);
-        var menu = link.getAttr("data-page");
+        var menu = link.attr("data-page");
         var url = document.URL;
         var ix = url.indexOf("?");
         if (ix != -1) {

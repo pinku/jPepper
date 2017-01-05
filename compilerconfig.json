@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "js/plugins/webapp/themes/default/main.css",
+    "inputFile": "js/plugins/webapp/themes/default/main.less"
+  },
+  {
+    "outputFile": "js/plugins/webapp/designer/css/main.css",
+    "inputFile": "js/plugins/webapp/designer/css/main.less"
+  },
+  {
+    "outputFile": "js/plugins/webapp/jpepper.webapp.0.1.0.es5.js",
+    "inputFile": "js/plugins/webapp/jpepper.webapp.0.1.0.js"
+  }
+]

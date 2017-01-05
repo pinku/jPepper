@@ -1,0 +1,301 @@
+﻿/******************************************************************************
+    global
+******************************************************************************/
+body {
+    margin: 0;
+}
+
+.row, .col {
+    overflow: hidden;
+    position: absolute;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.row {
+    left: 0;
+    right: 0;
+    padding: .2em;
+}
+
+.col {
+    top: 0;
+    bottom: 0;
+}
+
+.scroll-x {
+    overflow-x: auto;
+}
+
+.scroll-y {
+    overflow-y: auto;
+}
+
+/******************************************************************************
+    structure
+******************************************************************************/
+@toolbarheight: 2.5em;
+@footerheight: 2.5em;
+
+.viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: -.1em;
+    width: auto;
+    height: auto;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 60px;
+    font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+
+    .page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: auto;
+        height: auto;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+
+        .toolbar, .footer {
+            .row;
+            .bottomshadow;
+            height: @toolbarheight;
+            padding: .8em .2em;
+            font-size: 1em;
+        }
+
+        .content {
+            overflow-y: auto;
+            top: @toolbarheight;
+            bottom: @footerheight;
+            padding: .4em;
+
+            article {
+                padding: .4em;
+                margin-bottom: .4em;
+                box-shadow: 0 0 .5em rgba(0,0,0,.4);
+                float: left;
+
+                .row {
+                    position: relative;
+                    float: left;
+                    clear: both;
+                    width: 100%;
+                }
+            }
+        }
+
+        .footer {
+            bottom: 0;
+            .topshadow;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+
+    .panel {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        display: block;
+        -moz-transition: left .3s;
+        -o-transition: left .3s;
+        -webkit-transition: left .3s;
+        transition: left .3s;
+
+        &.left {
+            left: -100%;
+
+            .inner {
+                left: 0;
+                right: 20%;
+                .rightshadow;
+            }
+        }
+
+        &.right {
+            left: 100%;
+
+            .inner {
+                left: 20%;
+                right: 0;
+                .leftshadow;
+            }
+        }
+
+        &.visible {
+            left: 0;
+        }
+
+        .inner {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: auto;
+            height: auto;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow-y: auto;
+
+            .menuitem {
+                font-size: .8em;
+                text-decoration: none;
+                display: block;
+                border-bottom: solid 1px #DCEDC8;
+                padding: .5em .1em;
+                color: inherit;
+            }
+
+            .title {
+                font-size: .8em;
+                font-weight: bold;
+                text-decoration: none;
+                display: block;
+                border-bottom: solid 1px #DCEDC8;
+                padding: .5em .5em;
+                text-align: center;
+            }
+        }
+    }
+}
+
+/******************************************************************************
+    generics
+******************************************************************************/
+.aligncenter {
+    text-align: center;
+}
+
+.alignleft {
+    text-align: left;
+}
+
+.alignright {
+    text-align: right;
+}
+
+.floatleft {
+    float: left;
+}
+
+.floatright {
+    float: right;
+}
+
+.clearboth {
+    clear: both;
+}
+
+.fulltop {
+    top: 0 !important;
+}
+
+.fullbottom {
+    bottom: 0 !important;
+}
+
+.bottomshadow {
+    box-shadow: 0 5px 5px rgba(0,0,0,.4) !important;
+}
+
+.topshadow {
+    box-shadow: 0 -5px 5px rgba(0,0,0,.4) !important;
+}
+
+.leftshadow {
+    box-shadow: -5px 0 5px rgba(0,0,0,.4) !important;
+}
+
+.rightshadow {
+    box-shadow: 5px 0 5px rgba(0,0,0,.4) !important;
+}
+
+.size05 {
+    font-size: .5em;
+}
+
+.size06 {
+    font-size: .6em;
+}
+
+.size07 {
+    font-size: .7em;
+}
+
+.size08 {
+    font-size: .8em;
+}
+
+.size09 {
+    font-size: .9em;
+}
+
+.size2 {
+    font-size: 2em;
+}
+
+/******************************************************************************
+    colors
+******************************************************************************/
+.indigo {
+    @background-color: #E8EAF6;
+    @color: rgba(255,255,255,.87);
+
+    &.c100 {
+        background-color: darken(@background-color, 10%);
+        color: @color;
+    }
+
+    &.c200 {
+        background-color: darken(@background-color, 20%);
+        color: @color;
+    }
+
+    &.c300 {
+        background-color: darken(@background-color, 30%);
+        color: @color;
+    }
+
+    &.c400 {
+        background-color: darken(@background-color, 40%);
+        color: @color;
+    }
+
+    &.c500 {
+        background-color: darken(@background-color, 50%);
+        color: @color;
+    }
+
+    &.c600 {
+        background-color: darken(@background-color, 60%);
+        color: @color;
+    }
+
+    &.c700 {
+        background-color: darken(@background-color, 70%);
+        color: @color;
+    }
+
+    &.c800 {
+        background-color: darken(@background-color, 80%);
+        color: @color;
+    }
+
+    &.c900 {
+        background-color: darken(@background-color, 90%);
+        color: @color;
+    }
+}

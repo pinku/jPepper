@@ -45,6 +45,8 @@ up.uploader("startUpload");
     var SERVERHANDLER = "serverhandler";
     var FILETYPES = "filetypes";
     var UPLOADERTYPE = "uptype";
+    var CLIENTMAXWIDTH = "clientmaxwidth";
+    var CLIENTMAXHEIGHT = "clientmaxheight";
 
     var ERRORS = [
         "File API not supported, can't init jPepper.uploader",
@@ -156,7 +158,7 @@ up.uploader("startUpload");
             this.trigger(EVTFILEUPLOADSTART, file);
 
             xhr.open("POST", uri, true);
-            xhr.setRequestHeader("Content-type", file.type);
+            //xhr.setRequestHeader("Content-type", file.type);
             xhr.onprogress = function (e) {
 
                 if (e.lengthComputable) {
@@ -173,7 +175,7 @@ up.uploader("startUpload");
             xhr.onreadystatechange = function (e) {
 
                 // success
-                if (this.readyState == 4 && this.status == 200) {
+                if (this.readyState == 4 && this.status == 200 && this.response != "ERROR") {
 
                     this.onreadystatechange = null;
                     _this.trigger(EVTFILEUPLOADEND, {
@@ -187,6 +189,12 @@ up.uploader("startUpload");
                 }
                 // error
                 if ((this.readyState == 4 || this.readyState == 3) && this.status != 200) {
+
+                    this.onreadystatechange = null;
+                    _this.trigger(EVTERROR, new _.Error(ERRORSOURCE, "", this.statusText, _this));
+
+                }
+                if (this.readyState == 4 && this.status == 200 && this.response == "ERROR") {
 
                     this.onreadystatechange = null;
                     _this.trigger(EVTERROR, new _.Error(ERRORSOURCE, "", this.statusText, _this));
@@ -363,6 +371,53 @@ up.uploader("startUpload");
         }
 
     };
+    function processFile(dataURL, fileType, width, height) {
+
+        var maxWidth = width;
+        var maxHeight = height;
+
+        var image = new Image();
+        image.src = dataURL;
+
+        image.onload = function () {
+            var width = image.width;
+            var height = image.height;
+            var shouldResize = (width > maxWidth) || (height > maxHeight);
+
+            if (!shouldResize) {
+                sendFile(dataURL);
+                return;
+            }
+
+            var newWidth;
+            var newHeight;
+
+            if (width > height) {
+                newHeight = height * (maxWidth / width);
+                newWidth = maxWidth;
+            } else {
+                newWidth = width * (maxHeight / height);
+                newHeight = maxHeight;
+            }
+
+            var canvas = document.createElement('canvas');
+
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+
+            var context = canvas.getContext('2d');
+
+            context.drawImage(this, 0, 0, newWidth, newHeight);
+
+            dataURL = canvas.toDataURL(fileType);
+
+            sendFile(dataURL);
+        };
+
+        image.onerror = function () {
+            alert('There was an error processing your file!');
+        };
+    }
 
     _.createPlugin({
         name: "uploader",
